@@ -6,17 +6,11 @@
  -->
 <html>
   <head>
-    <title>Getting Started Extension's Popup</title>
+    <title>Habla Comments</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-      body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-        font-size: 100%;
-      }
-      #status {
-        /* avoid an excessively wide status text */
-        word-wrap: break-word;
-        width:400px;
-      }
+
+      
     </style>
 
     <!--
@@ -25,10 +19,20 @@
       -
       - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
      -->
-    <script src="popup.js"></script>
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="habla_base.js"></script>
+    <script src="habla.js"></script>
   </head>
   <body>
-    <div id="status">The habla extension comment content will probably go somewhere here</div>
+    <div id="comment-box-container">
+      <textarea id="comment-box" name="comment" placeholder="Leave a comment here!"></textarea>
+    </div>
+    <div id="comment-box-submit">
+      <a id="comment-box-submit-button" href="#">Submit</a>
+    </div>
+    <div id="comments-list">
+      
+    </div>
   </body>
 </html>
 
