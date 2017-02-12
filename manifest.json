@@ -6,13 +6,18 @@
   "version": "1.0",
 
   "browser_action": {
-    "default_icon": "habla_icon.png",
-    "default_popup": "habla_popup.html"
+    "default_icon": "habla_icon.png"
   },
   "background": {
-    "persistent": false,
-    "scripts": ["test.js"]
+    "scripts": ["habla-background.js"]
   },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "css": ["styles.css"],
+      "js": ["jquery-3.1.1.min.js", "habla-base.js", "habla-helpers.js", "habla-content-script.js"]
+    }
+  ],
   "permissions": [
     "activeTab",
     "https://ajax.googleapis.com/"
