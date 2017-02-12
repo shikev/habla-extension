@@ -1,6 +1,13 @@
 function Comment(content, id) {
 	this.content = content;
 	this.id = id;
+	this.generateElement = function() {
+		var $comment = $("<div>", {id: "comment-" + this.id, "class": "habla-comment"});
+		$comment.mouseover(function() {
+			console.log("Comment with id " + this.id + " was moused over!");
+		});
+		return $comment;
+	}
 };
 
 function CommentList() {
@@ -12,7 +19,7 @@ function CommentList() {
 		for (var i = 0; i < this.comments.length; i++) {
 			// append comment in divs within #comment-list
 			idCounter += 1;
-			var $div = $("<div>", {id: "comment" + idCounter, "class": "comment"});
+			var $div = $("<div>", {id: "comment" + idCounter, "class": "habla0comment"});
 			$div.html(this.comments[i].content);
 			$("#comments-list").append($div);
 		}
