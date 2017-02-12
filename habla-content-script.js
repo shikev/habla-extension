@@ -54,16 +54,26 @@ function CommentList() {
 	this.refresh = function() {
 		var that = this;
 		hashedUrl = habla.utility.MD5(window.location.href);
+		console.log("Retrieving comments");
 		$.ajax({
 			type: "GET",
 			url: habla.baseUrl + "api/v1/comments?url=" + hashedUrl,
 			dataType: "json"
 		}).done(function(data) {
+			// data = {
+			// 	comments: [
+			// 		{
+			// 			content: "content",
+			// 			id: "id"
+			// 		}
+			// 	]
+			// }
 			console.log("Data retrieved: ", data);
 			results = data.comments;
 		    for(var i = 0; i < results.length; i++) {
 		    	that.comments.push(new Comment(results[i].content, results[i].id));
 		    }
+		    that.display();
 		}).fail(function(data) {
 			// Display Error message on the UI side
 		    console.log("Error: ", data);
@@ -71,9 +81,9 @@ function CommentList() {
 	};
 
 	// Adds a comment locally, then display it at the top 
-	this.addAndDisplayComment = function(comment) {
+	this.addComment = function(comment) {
 		console.log("Comment added: ", comment);
-		this.comments.unshift(comment);
+		this.comments.push(comment);
 	};
 	
 
@@ -83,11 +93,13 @@ function CommentList() {
 function CommentBox(commentList) {
 	// Internal variables
 	this.commentList = commentList;
+	console.log(this);
 	// HTML AND EVENT HANDLERS
 	var $container = $("<div>", {id: "comment-box-container"});
-	var $commentBox = $("<textarea>", {id: "comment-box-container"});
+	var $commentBox = $("<textarea>", {id: "comment-box", placeholder: "Type your comment here!"});
 	var $buttonContainer = $("<div>", {id: "comment-box-submit"});
-	var $button = $("<a>", {id: "comment-box-submit-button"});
+	var $button = $("<a>", {id: "comment-box-submit-button"}).text("Submit");
+	var that = this;
 	$button.click(function() {
 		postData = {
 			url: habla.utility.MD5(window.location.href),
@@ -97,12 +109,17 @@ function CommentBox(commentList) {
 			type: "POST",
 			url: habla.baseUrl + "api/v1/comments",
 			data: jQuery.param(postData),
-			dataType: "json",
-			context: this
+			dataType: "json"
 		}).done(function(data) {
-			results = data;
-			this.commentList.addComment(new Comment(results.content, results.id));
-			this.commentList.display();
+			// data = {
+			// 	comment: {
+			// 		content: "content",
+			// 		id: "id"
+			// 	}
+			// }
+			results = data.comment;
+			that.commentList.addComment(new Comment(results.content, results.id));
+			that.commentList.display();
 		}).fail(function(data) {
 			// Handle error posting comment on the UI
 		    alert("Error posting comment to server:", data);
@@ -123,16 +140,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, callback) {
     // request contains the YOURMESSAGEPAYLOAD sent above as a Javascript object literal
     console.log("Request received from background page: ", request);
     if (request.action == "initialize") {
-    	console.log(habla);
     	habla.container = new Container("habla-master", "habla-master-container");
     	$("body").append(habla.container.$html);
-    	console.log(habla);
     	habla.commentList = new CommentList()
 		habla.commentBox = new CommentBox(habla.commentList);
-		console.log(habla);
 		habla.container.$html.append(habla.commentList.$html);
 		habla.container.$html.append(habla.commentBox.$html);
 
+		habla.commentList.refresh();
 
   //  	 	var $div = $("<div>", {id: "foo", "class": "habla-container"});
 		// $("body").append($div);
