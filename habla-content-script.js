@@ -1,19 +1,4 @@
-// var j = document.createElement('jquery');
-// j.src = chrome.extension.getURL('jquery-3.1.1.min.js');
-// (document.head||document.documentElement).appendChild(j);
-// console.log("trying to load jquery");
-// j.onload = function() {
-	// console.log(document);
-	// var s = document.createElement('script');
-	// s.src = chrome.extension.getURL('script.js');
-	// (document.head||document.documentElement).appendChild(s);
 
-	// s.onload = function() {
-	//     s.parentNode.removeChild(s);
-	// };
-
-//     j.parentNode.removeChild(s);
-// };
 console.log("Content Script Loaded");
 
 function Container(id, classes) {
