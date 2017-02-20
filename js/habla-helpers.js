@@ -1,3 +1,10 @@
+// Initials
+
+var h = document.createElement('div');
+h.setAttribute("id", "habla");
+document.body.appendChild(h);
+
+
 // All global helpers 
 habla.utility = {};
 habla.utility.MD5 = function (string) {

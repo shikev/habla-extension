@@ -1,0 +1,231 @@
+/*Comment box*/
+
+.hablaReplyCommentBox {
+    width: 240px;
+}
+
+#habla-top-level-comment-box {
+    width: 270px;
+}
+
+#habla-top-level-comment-box, .hablaReplyCommentBox {
+    margin: 0px auto 0px auto;
+}
+
+
+#habla-top-level-comment-box-textarea, .hablaReplyCommentTextArea {
+    border-radius: 5px;
+    border-color: var(--habla-color);
+    display: block;
+    width: inherit;
+}
+
+.hablaPostButton {
+    border: solid var(--habla-color);
+    border-radius: 5px;
+    background-color: var(--habla-color);
+    color: white;
+    display: block;
+    font-family: Verdana;
+    font-size: 16px;
+    margin: 2px 0px;
+    padding: 5px 20px;
+}
+
+:root {
+    --habla-color: rgb(112, 48, 160);
+    --secondary-color: rgb(170, 114, 212);
+}
+
+/*Master Container*/
+#habla {
+    background-color: rgb(256,256,256); /* Fallback color */
+    border-left: solid var(--habla-color);
+    display: block; /* Hidden by default */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    position: fixed; /* Stay in place */
+    right: 0;
+    top: 0;
+    width: 300px; /* Full width */
+    z-index: 999999; /* Sit on top */
+}
+
+/*Habla logo on landing page*/
+.hablaLogo {
+    display: block;
+    margin: 20px auto;
+    width: 290px;
+}
+
+/*Buttons on landing page*/
+.hablaLandingButton {
+    font-size: 24px;
+    padding: 15px 30px;
+    width: 240px;
+}
+
+/*Back button*/
+.hablaBackButton {
+    font-size: 14px;
+    margin: 10px 0px 10px 50px;
+}
+
+.hablaReplyButton {
+    float: left;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.hablaBackButton, .hablaReplyButton {
+    background: none;
+    border: none;
+    color: var(--habla-color);
+    display: block;
+    font-family: Verdana;
+    padding: 0px;
+}
+
+.hablaBackButton:hover, .hablaReplyButton:hover {
+    color: var(--secondary-color);
+}
+
+/*Other buttons*/
+.hablaGeneralButton {
+    font-size: 20px;
+    padding: 10px 30px;
+    width: auto;
+}
+
+/*Button base*/
+.hablaLandingButton, .hablaGeneralButton {
+    border-color: var(--habla-color);
+    border-radius: 8px;
+    border-style: solid;
+    box-shadow: none;
+    background-color: var(--habla-color);
+    color: rgb(256,256,256);
+    display: block;
+    font-family: Verdana;
+    height: auto;
+    margin: 30px auto;
+}
+
+.hablaLandingButton:hover, .hablaGeneralButton:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+/*Input labels*/
+.hablaInputLabel {
+    color: var(--habla-color);
+    display: block;
+    font-family: Verdana;
+    font-size: 18px;
+    font-weight: bold;
+    float: left;
+    margin: 5px 0px;
+}
+
+/*Input boxes*/
+.hablaInputBox {
+    border-color: var(--habla-color);
+    border-style: solid;
+    border-width: 1px;
+    float: left;
+    font-family: Verdana;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+#habla-join-group-form, #habla-create-group-form {
+    font-family: Verdana;
+    margin: 20px auto;
+    text-align: center;
+    width: 200px;
+}
+
+.hablaComment, .hablaReply{
+    display: block;
+    height: auto;
+    margin: 10px;
+}
+
+.hablaCommentText {
+    font-family: Verdana;
+    font-size: 14px;
+    height: auto;
+    margin: 0px;
+    padding: 5px 0px;
+}
+
+.hablaH1 {
+    font-size: 30px;
+    text-align: center;
+}
+
+.hablaH2 {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.hablaH1, .hablaH2 {
+    color: var(--habla-color);
+    display: block;
+    font-family: Verdana;
+    margin: 0 auto;
+}
+
+.hablaReplyTimestamp {
+    display: block;
+    overflow: hidden;
+}
+
+.hablaTimestamp {
+    color: gray;
+    float: left;
+    font-family: Verdana;
+    font-size: 12px;
+    height: auto;
+    margin: 0px;
+    padding: 0px;
+}
+
+.hablaCommentsHeader {
+    background-color: var(--habla-color);
+    color: white;
+    font-family: verdana;
+    font-size: 20px;
+    font-weight: bold;
+    display: table-cell;
+    height: auto;
+    margin: 0px;
+    padding: 30px 10px;
+    text-align: center;
+    vertical-align: middle;
+    width: 300px;
+}
+
+.hablaReplySection {
+    border-left: solid var(--habla-color);
+    border-width: 0.5px;
+    margin: 10px 10px 10px 15px;
+    padding-left : 10px;
+}
+
+.hablaSubduedUsername {
+    color: gray;
+    font-family: Verdana;
+    font-size: 16px;
+    margin: 10px 0px 5px 0px;
+}
+
+.hablaAdminIcon {
+    float: left;
+    height: 18px;
+    margin-right: 5px;
+    width: 18px;
+}

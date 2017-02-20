@@ -2,4 +2,3 @@
 window.habla = {};
 habla.baseUrl = "http://localhost:3000/";
 
-
