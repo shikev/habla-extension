@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "Getting started example",
-  "description": "This extension shows a Google Image search result for the current page",
+  "name": "Habla",
+  "description": "This extension adds a comment feed onto any webpage where groups of users can have discussions.",
   "version": "1.0",
 
   "browser_action": {
