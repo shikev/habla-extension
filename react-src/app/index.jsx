@@ -1,15 +1,13 @@
-
 import $ from "jquery";
 import React from 'react';
 import {render} from 'react-dom';
-import AwesomeComponent from './AwesomeComponent.jsx';
+import MasterContainer from './MasterContainer.jsx';
 
 class App extends React.Component {
   render () {
     return (
       <div>
-        <p> Hello React!</p>
-        <AwesomeComponent />
+        <MasterContainer />
       </div>
     );
   }
@@ -17,6 +15,7 @@ class App extends React.Component {
 
 
 $(document).ready(function(){
+	$("body").append($("<div>", {id: "habla"}));
 	render(<App/>, document.getElementById("habla"));
 });
 

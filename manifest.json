@@ -14,12 +14,8 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "css": ["css/styles.css"],
-      "js": ["js/habla-base.js", "js/habla-helpers.js"]
-    },
-    {
-      "matches": ["http://*/*", "https://*/*"],
       "run_at": "document_end",
+      "css": ["css/styles.css"],
       "js": ["js/habla-content-script.js"]
     }
   ],
