@@ -29,11 +29,11 @@
 }
 
 .replyCommentBox {
-    width: 250px;
+    width: 240px;
 }
 
 #top-level-comment-box {
-    width: 280px;
+    width: 270px;
 }
 
 #top-level-comment-box, .replyCommentBox {
