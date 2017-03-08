@@ -85,9 +85,6 @@ class CommentSection extends React.Component {
     // If top level comment
     if(parentId == 0) {
       comments.push(comment);
-      this.setState({
-        comments: comments
-      })
     }
     else {
       for (let i = 0; i < comments.length; i++) {
@@ -97,6 +94,9 @@ class CommentSection extends React.Component {
         }
       }
     }
+    this.setState({
+        comments: comments
+      })
   }
 
   handleCommentSubmit(data) {
@@ -125,7 +125,7 @@ class CommentSection extends React.Component {
   render() {
   	let commentElements = [];
     for (let i = 0; i < this.state.comments.length; i++) {
-     commentElements.push(<Comment key={this.state.comments[i].id} data={this.state.comments[i]} username={this.props.username} groupName={this.props.groupName} onSubmit={this.handleCommentSubmit}/>);
+     commentElements.push(<Comment replyBoxId={"reply-box-" + this.state.comments[i].id} id={this.state.comments[i].id} key={this.state.comments[i].id} data={this.state.comments[i]} username={this.props.username} groupName={this.props.groupName} onReply={this.handleCommentSubmit}/>);
     }
   	
     return (

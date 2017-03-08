@@ -24,7 +24,9 @@ class CommentBox extends React.Component {
   		data[name] = value;
   	}
   	data["url"] = helpers.hashes.MD5(window.location.href)
+
   	this.props.onSubmit(data);
+  	$("#" + this.props.id + "-textarea").val("");
   }
 
 
@@ -34,7 +36,7 @@ class CommentBox extends React.Component {
     return (
       <div>
       	<form id={this.props.id} onSubmit={this.processSubmit}>
-          <textarea rows="4" cols="50" name="content" form={this.props.id} placeholder="Type your comment here..."></textarea>
+          <textarea id={this.props.id + "-textarea"} rows="4" cols="50" name="content" form={this.props.id} placeholder="Type your comment here..."></textarea>
           <input type="hidden" name="username" value={this.props.username} />
           <input type="hidden" name="groupName" value={this.props.groupName} />
           <SubmitInput className="FIX_THIS" name="formSubmit" />
