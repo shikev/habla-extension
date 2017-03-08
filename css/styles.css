@@ -1,19 +1,19 @@
 /*Comment box*/
 #comment-box-container {
-	width:100%;
+    width:100%;
 }
 #comment-box {
-	width: 100%;
+    width: 100%;
 }
 #comment-box-submit-button {
-	display: inline-block;
-	width: 200px;
-	padding: 8px;
-	color: #000;
-	border: 1px solid #000;
-	text-align: center;
-	outline: none;
-	text-decoration: none;
+    display: inline-block;
+    width: 200px;
+    padding: 8px;
+    color: #000;
+    border: 1px solid #000;
+    text-align: center;
+    outline: none;
+    text-decoration: none;
 }
 
 #comment-box-submit-button:hover,
@@ -25,11 +25,12 @@
 
 #comments-list {
 /* avoid an excessively wide status text */
-	word-wrap: break-word;
+    word-wrap: break-word;
 }
 
 :root {
-    --habla-color: rgb(112, 48, 160)
+    --habla-color: rgb(112, 48, 160);
+    --secondary-color: rgb(170, 114, 212);
 }
 
 /*Master Container*/
@@ -60,6 +61,21 @@
     width: 240px;
 }
 
+/*Back button*/
+.backButton {
+    background: none;
+    border: none;
+    color: var(--habla-color);
+    display: block;
+    font-size: 12px;
+    margin-left: 50px;
+    padding: 0px;
+}
+
+.backButton:hover {
+    color: var(--secondary-color);
+}
+
 /*Other buttons*/
 .generalButton {
     font-size: 20px;
@@ -78,6 +94,11 @@
     color: rgb(256,256,256);
     height: auto;
     margin: 30px auto;
+}
+
+.landingButton:hover, .generalButton:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
 }
 
 /*Input labels*/

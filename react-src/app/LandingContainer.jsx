@@ -47,12 +47,12 @@ class LandingForm extends React.Component {
 
   render() {
     let logoClasses = "logo";
+    let back = "<< Back"
     return (
     	<div>
         <Logo className={logoClasses}/>
     		<h1 className="hablaH1">{this.props.title}</h1>
-    		<button className="backButton" onClick={this.props.onBack}>Go Back</button>
-	      <form id={this.props.id} onSubmit={this.processSubmit}>
+        <form id={this.props.id} onSubmit={this.processSubmit}>
           <label className="inputLabel">Group name:</label>
           <input className="inputBox" type="text" name="groupName" value="" />
           <label className="inputLabel">Group password:</label>
@@ -60,7 +60,8 @@ class LandingForm extends React.Component {
           <label className="inputLabel">Your username:</label>
           <input className="inputBox" type="text" name="username" value="" />
           <input className="generalButton" type="submit"  name="formSubmit" />
-	      </form>
+        </form>
+    		<button className="backButton" onClick={this.props.onBack}>{back}</button>
       </div>
     );
   }
