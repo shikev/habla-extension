@@ -15,7 +15,7 @@ class InitialLandingMenu extends React.Component {
 
   render() {
 
-  	let logoClasses = "large";
+  	let logoClasses = "logo";
   	let landingButtonClasses = "landingButton";
   	return (
 	  	<div>
@@ -46,24 +46,20 @@ class LandingForm extends React.Component {
   }
 
   render() {
+    let logoClasses = "logo";
     return (
     	<div>
-    		<h2>{this.props.title}</h2>
-    		<button onClick={this.props.onBack}>Go Back</button>
+        <Logo className={logoClasses}/>
+    		<h1 className="hablaH1">{this.props.title}</h1>
+    		<button className="backButton" onClick={this.props.onBack}>Go Back</button>
 	      <form id={this.props.id} onSubmit={this.processSubmit}>
-	        <label>
-	          Your Name:
-	          <TextInput name="username" />
-	        </label>
-	        <label>
-	          Group Name:
-	          <TextInput name="groupName" />
-	        </label>
-	        <label>
-	          Group Password:
-	          <PasswordInput name="groupPassword" />
-	        </label>
-	        <SubmitInput text="Submit" name="formSubmit" />
+          <label className="inputLabel">Group name:</label>
+          <input className="inputBox" type="text" name="groupName" value="" />
+          <label className="inputLabel">Group password:</label>
+          <input className="inputBox" type="password" name="groupPassword" value="" />
+          <label className="inputLabel">Your username:</label>
+          <input className="inputBox" type="text" name="username" value="" />
+          <input className="generalButton" type="submit"  name="formSubmit" />
 	      </form>
       </div>
     );
