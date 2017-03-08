@@ -51,24 +51,27 @@ class Comment extends React.Component {
       replyElements.push(<Reply key={children[i].id} data={children[i]} />);
     }
     if (this.state.showReply == true) {
-      replyForm = <form id={this.props.replyBoxId} onSubmit={this.processReply}>
-          <textarea id={this.props.replyBoxId + "-textarea"} rows="4" cols="50" name="content" form={this.props.replyBoxId} placeholder="Type your comment here..."></textarea>
+      replyForm = <form className="replyCommentBox" id={this.props.replyBoxId} onSubmit={this.processReply}>
+          <textarea className="replyCommentTextarea" id={this.props.replyBoxId + "-textarea"} rows="4" cols="50" name="content" form={this.props.replyBoxId} placeholder="Type your comment here..."></textarea>
           <input type="hidden" name="username" value={this.props.username} />
           <input type="hidden" name="groupName" value={this.props.groupName} />
           <input type="hidden" name="parentId" value={this.props.id} />
-          <SubmitInput className="FIX_THIS" name="formSubmit" />
+          <SubmitInput className="postButton" name="formSubmit" />
         </form>;
     }
     return (
-    	<div>
-    		{posterName}
-        {timestamp}
-        {content}
-        <a href="#" onClick={this.displayReplyBox}>Reply</a>
-        {replyForm}
-        {replyElements}
-
-      	</div>
+    	<div className="comment">
+        <h2 className="hablaH2">{posterName}</h2>
+        <p className="commentText">{content}</p>
+        <div className="replyTimestamp">
+          <button className="replyButton" onClick={this.displayReplyBox}>Reply</button>
+          <p className="timestamp">{timestamp}</p>
+        </div>
+        <div className="replySection">
+          {replyElements}
+          {replyForm}
+        </div>
+      </div>
     );
   }
 

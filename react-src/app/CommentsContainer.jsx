@@ -18,9 +18,7 @@ class Header extends React.Component {
   render() {
 
     return (
-    	<div>
-    		<h2>{this.props.groupName}</h2>
-      </div>
+    	<p className="commentsHeader">{this.props.groupName}</p>
     );
   }
 }
@@ -157,7 +155,6 @@ class CommentsContainer extends React.Component {
     return (
     	<div>
     		<Header groupName={this.props.groupName} />
-        Comments:
     		<CommentSection username={this.props.username} groupName={this.props.groupName} />
       </div>
     );

@@ -28,6 +28,38 @@
     word-wrap: break-word;
 }
 
+.replyCommentBox {
+    width: 250px;
+}
+
+#top-level-comment-box {
+    width: 280px;
+}
+
+#top-level-comment-box, .replyCommentBox {
+    margin: 20px auto 0px auto;
+}
+
+
+#top-level-comment-box-textarea, .replyCommentTextarea {
+    border-radius: 5px;
+    border-color: var(--habla-color);
+    display: block;
+    width: inherit;
+}
+
+.postButton {
+    border: solid var(--habla-color);
+    border-radius: 5px;
+    background-color: var(--habla-color);
+    color: white;
+    display: block;
+    font-family: Verdana;
+    font-size: 16px;
+    margin: 2px 0px;
+    padding: 5px 20px;
+}
+
 :root {
     --habla-color: rgb(112, 48, 160);
     --secondary-color: rgb(170, 114, 212);
@@ -51,7 +83,7 @@
 .logo {
     display: block;
     margin: 20px auto;
-    width: 300px;
+    width: 290px;
 }
 
 /*Buttons on landing page*/
@@ -63,17 +95,28 @@
 
 /*Back button*/
 .backButton {
+    bottom: 20px;
+    font-size: 14px;
+    margin-left: 50px;
+    position: absolute;
+}
+
+.replyButton {
+    float: left;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.backButton, .replyButton {
     background: none;
     border: none;
     color: var(--habla-color);
     display: block;
     font-family: Verdana;
-    font-size: 12px;
-    margin-left: 50px;
     padding: 0px;
 }
 
-.backButton:hover {
+.backButton:hover, .replyButton:hover {
     color: var(--secondary-color);
 }
 
@@ -135,11 +178,70 @@
     width: 200px;
 }
 
+.comment, .reply{
+    display: block;
+    height: auto;
+    margin: 10px;
+}
+
+.commentText {
+    font-family: Verdana;
+    font-size: 14px;
+    height: auto;
+    margin: 0px;
+    padding: 5px 0px;
+}
+
 .hablaH1 {
+    font-size: 30px;
+    text-align: center;
+}
+
+.hablaH2 {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.hablaH1, .hablaH2 {
     color: var(--habla-color);
     display: block;
     font-family: Verdana;
-    font-size: 30px;
     margin: 0 auto;
+}
+
+.replyTimestamp {
+    display: block;
+    overflow: hidden;
+}
+
+.timestamp {
+    color: gray;
+    float: left;
+    font-family: Verdana;
+    font-size: 12px;
+    height: auto;
+    margin: 0px;
+    padding: 0px;
+}
+
+.commentsHeader {
+    background-color: var(--habla-color);
+    color: white;
+    font-family: verdana;
+    font-size: 20px;
+    font-weight: bold;
+    display: table-cell;
+    height: auto;
+    margin: 0px;
+    padding: 30px 10px;
     text-align: center;
+    vertical-align: middle;
+    width: 300px;
+}
+
+.replySection {
+    border-left: solid var(--habla-color);
+    border-width: 0.5px;
+    margin: 10px 10px 10px 15px;
+    padding-left : 10px;
 }

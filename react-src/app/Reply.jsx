@@ -17,12 +17,13 @@ class Reply extends React.Component {
     let timestamp = this.props.data.timestamp;
 
     return (
-    	 <div id={id}>
-    		{posterName}
-        {timestamp}
-        {content}
-
-      	</div>
+      <div className="reply">
+        <h2 className="hablaH2">{posterName}</h2>
+        <p className="commentText">{content}</p>
+        <div className="replyTimestamp">
+          <p className="timestamp">{timestamp}</p>
+        </div>
+      </div>
     );
   }
 
