@@ -4,20 +4,12 @@ import {render} from 'react-dom';
 import MasterContainer from './MasterContainer.jsx';
 
 window.hablaHasDisplayed = false;
-window.hablaIsHidden = false;
 
 $(document).ready(function(){
 	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	  if (request.action == "toggleDisplay") {
-	  	if (window.hablaHasDisplayed && window.hablaIsHidden === false) {
-	  		window.hablaIsHidden = true;
-	  		$("#habla").hide();
-	  		// hide habla div
-	  	}
-	  	else if (window.hablaIsHidden === true) {
-	  		// Habla has been hidden, just show it
-	  		window.hablaIsHidden = false;
-	  		$("#habla").show();
+	  	if (window.hablaHasDisplayed) {
+	  		$("#habla").toggle();
 	  	}
 	  	else {
 	  		// Habla has never been shown
