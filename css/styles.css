@@ -37,7 +37,7 @@
 }
 
 #top-level-comment-box, .replyCommentBox {
-    margin: 20px auto 0px auto;
+    margin: 0px auto 0px auto;
 }
 
 
@@ -95,10 +95,8 @@
 
 /*Back button*/
 .backButton {
-    bottom: 20px;
     font-size: 14px;
-    margin-left: 50px;
-    position: absolute;
+    margin: 10px 0px 0px 50px;
 }
 
 .replyButton {
@@ -244,4 +242,18 @@
     border-width: 0.5px;
     margin: 10px 10px 10px 15px;
     padding-left : 10px;
+}
+
+.subduedUsername {
+    color: gray;
+    font-family: Verdana;
+    font-size: 16px;
+    margin: 10px 0px 5px 0px;
+}
+
+.adminIcon {
+    float: left;
+    height: 18px;
+    margin-right: 5px;
+    width: 18px;
 }

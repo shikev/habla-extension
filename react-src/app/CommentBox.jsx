@@ -35,7 +35,8 @@ class CommentBox extends React.Component {
   	console.log(this.props);
     return (
       <div>
-      	<form id={this.props.id} onSubmit={this.processSubmit}>
+        <form id={this.props.id} onSubmit={this.processSubmit}>
+          <p className="subduedUsername">{this.props.username}</p>
           <textarea id={this.props.id + "-textarea"} rows="4" cols="50" name="content" form={this.props.id} placeholder="Type your comment here..."></textarea>
           <input type="hidden" name="username" value={this.props.username} />
           <input type="hidden" name="groupName" value={this.props.groupName} />

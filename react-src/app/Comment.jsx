@@ -45,12 +45,20 @@ class Comment extends React.Component {
     let id = this.props.data.id;
     let timestamp = this.props.data.timestamp;
     let children = this.props.data.children;
+    let replyUsername = ""
     let replyForm = ""
     let replyElements = [];
     for (let i = 0; i < children.length; i++) {
       replyElements.push(<Reply key={children[i].id} data={children[i]} />);
     }
+
+    let adminIcon = ""
+    console.log(this.props.data.privilege)
+    if (this.props.data.privilege == "admin") {
+      adminIcon = <img src={chrome.extension.getURL("img/admin_icon.png")} className="adminIcon" />
+    }
     if (this.state.showReply == true) {
+      replyUsername = <p className="subduedUsername">{this.props.username}</p>
       replyForm = <form className="replyCommentBox" id={this.props.replyBoxId} onSubmit={this.processReply}>
           <textarea className="replyCommentTextarea" id={this.props.replyBoxId + "-textarea"} rows="4" cols="50" name="content" form={this.props.replyBoxId} placeholder="Type your comment here..."></textarea>
           <input type="hidden" name="username" value={this.props.username} />
@@ -61,7 +69,10 @@ class Comment extends React.Component {
     }
     return (
     	<div className="comment">
-        <h2 className="hablaH2">{posterName}</h2>
+        <span>
+          {adminIcon}
+          <h2 className="hablaH2">{posterName}</h2>
+        </span>
         <p className="commentText">{content}</p>
         <div className="replyTimestamp">
           <button className="replyButton" onClick={this.displayReplyBox}>Reply</button>
@@ -69,6 +80,7 @@ class Comment extends React.Component {
         </div>
         <div className="replySection">
           {replyElements}
+          {replyUsername}
           {replyForm}
         </div>
       </div>
