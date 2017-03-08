@@ -86,6 +86,7 @@ class LandingContainer extends React.Component {
 
   // registerPath is join or create
   register(data, registerPath) {
+    var that = this;
   	console.log(data);
   	$.ajax({
 			type: "POST",
@@ -96,6 +97,13 @@ class LandingContainer extends React.Component {
 			// Set username and group in chrome.storage
 			chrome.runtime.sendMessage({action: "store", data: data}, function(response) {
 			  console.log(response);
+        if (response.message == "success") {
+          // Switch view to CommentsContainer
+          that.props.onRegister(data);
+        }
+        else {
+          alert("Error storing elements in storage, check your data/env", response);
+        }
 			});
 			
 			
