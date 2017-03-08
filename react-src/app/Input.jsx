@@ -13,7 +13,7 @@ class PasswordInput extends React.Component {
 
   render() {
     return (
-      <input type="password" name={this.props.name} value={this.state.value} onChange={this.handleChange} />
+      <input type="password" className={this.props.className} name={this.props.name} value={this.state.value} onChange={this.handleChange} />
     );
   }
 }
@@ -32,7 +32,7 @@ class TextInput extends React.Component {
 
   render() {
     return (
-      <input type="text" name={this.props.name} value={this.state.value} onChange={this.handleChange} />
+      <input type="text" className={this.props.className} name={this.props.name} value={this.state.value} onChange={this.handleChange} />
     );
   }
 }
@@ -45,7 +45,7 @@ class SubmitInput extends React.Component {
 
   render() {
     return (
-      <input type="submit" name={this.props.name} text={this.props.text} />
+      <input type="submit" className={this.props.className} name={this.props.name} text={this.props.text} />
     );
   }
 }

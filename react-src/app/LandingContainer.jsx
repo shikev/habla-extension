@@ -54,12 +54,12 @@ class LandingForm extends React.Component {
     		<h1 className="hablaH1">{this.props.title}</h1>
         <form id={this.props.id} onSubmit={this.processSubmit}>
           <label className="inputLabel">Group name:</label>
-          <input className="inputBox" type="text" name="groupName" value="" />
+          <TextInput className="inputBox" name="groupName" />
           <label className="inputLabel">Group password:</label>
-          <input className="inputBox" type="password" name="groupPassword" value="" />
+          <PasswordInput className="inputBox" name="groupPassword" />
           <label className="inputLabel">Your username:</label>
-          <input className="inputBox" type="text" name="username" value="" />
-          <input className="generalButton" type="submit"  name="formSubmit" />
+          <TextInput className="inputBox" name="username" />
+          <SubmitInput className="generalButton" name="formSubmit" />
         </form>
     		<button className="backButton" onClick={this.props.onBack}>{back}</button>
       </div>
