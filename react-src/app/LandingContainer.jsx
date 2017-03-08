@@ -111,7 +111,7 @@ class LandingContainer extends React.Component {
 				let errors = data["errors"];
 				// TODO: handle error
 				// (Pass errors to the child Landing Form)
-		    alert("Error posting comment to server:", data);
+		    alert("Error Registering on server:", data);
 		});;
   }
 

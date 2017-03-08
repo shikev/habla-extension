@@ -31,6 +31,8 @@ class CommentSection extends React.Component {
 
   constructor(props) {
     super(props);
+    this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
+    this.addComment = this.addComment.bind(this);
     this.state = {comments: []}
     // ajax request list of comments
     let that = this;
@@ -52,7 +54,7 @@ class CommentSection extends React.Component {
 							// },
 							// id2: {
 								//			children: [array of comments]
-								//      poster: username,
+								//      posterName: username,
 								//			timestamp: time
 								// 			content: "content"
 							// }
@@ -74,17 +76,64 @@ class CommentSection extends React.Component {
 		    console.log("Error: ", data);
 		});
   }
+
+  addComment(data) {
+    let comment = data.comment;
+    console.log(comment);
+    let parentId = comment.parentId;
+    let comments = this.state.comments;
+    // If top level comment
+    if(parentId == 0) {
+      comments.push(comment);
+      this.setState({
+        comments: comments
+      })
+    }
+    else {
+      for (let i = 0; i < comments.length; i++) {
+        if (comments[i].id == parentId) {
+          comments[i].children.push(comment);
+          break;
+        }
+      }
+    }
+  }
+
+  handleCommentSubmit(data) {
+    // postData = {
+    //   url: habla.utility.MD5(window.location.href),
+    //   content: $commentBox.val(),
+    //   groupName: "fdsa"
+    // };
+    var that = this;
+    $.ajax({
+      type: "POST",
+      url: config.settings.baseUrl + "api/v1/comments",
+      data: data,
+      dataType: "json"
+    }).done(function(comment) {
+      // A comment is returned upon success
+
+      that.addComment(comment);
+    }).fail(function(data) {
+      // Handle error posting comment on the UI
+        alert("Error posting comment to server:", data);
+    });;
+  }
+
+
   render() {
   	let commentElements = [];
-  	for (let i = 0; i < this.state.comments.length; i++) {
-  		commentElements.push(<Comment data={this.state.comments[i]} />);
-  	}
+    for (let i = 0; i < this.state.comments.length; i++) {
+     commentElements.push(<Comment key={this.state.comments[i].id} data={this.state.comments[i]} username={this.props.username} groupName={this.props.groupName} onSubmit={this.handleCommentSubmit}/>);
+    }
+  	
     return (
       <div>
       	<div>
       		{commentElements}
         </div>
-        <CommentBox />
+        <CommentBox id="top-level-comment-box" username={this.props.username} groupName={this.props.groupName} onSubmit={this.handleCommentSubmit} />
       </div>
     );
   }
@@ -99,14 +148,16 @@ class CommentsContainer extends React.Component {
 
   constructor(props) {
     super(props);
-
   }
+
+  
+
   render() {
 
     return (
     	<div>
-        fuck
     		<Header groupName={this.props.groupName} />
+        Comments:
     		<CommentSection username={this.props.username} groupName={this.props.groupName} />
       </div>
     );

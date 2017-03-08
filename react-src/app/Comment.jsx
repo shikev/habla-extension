@@ -27,10 +27,16 @@ class Comment extends React.Component {
   }
   render() {
   	// Render children after 
+    let posterName = this.props.data.posterName;
+    let content = this.props.data.content;
+    let id = this.props.data.id;
+    let timestamp = this.props.data.timestamp;
+    let children = this.props.data.children;
     return (
     	<div>
-    		{this.props.data.poster}
-    		{this.props.data.content}
+    		{posterName}
+        {timestamp}
+        {content}
     		<CommentFooter />
 
       	</div>
