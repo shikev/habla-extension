@@ -23,5 +23,8 @@
     "activeTab",
     "https://ajax.googleapis.com/",
     "storage"
+  ],
+  "web_accessible_resources" : [
+    "img/*"
   ]
 }
