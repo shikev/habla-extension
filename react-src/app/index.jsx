@@ -13,13 +13,10 @@ class App extends React.Component {
   }
 }
 
-
 $(document).ready(function(){
 	$("body").append($("<div>", {id: "habla"}));
 	render(<App/>, document.getElementById("habla"));
 });
-
-
 
 
 

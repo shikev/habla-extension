@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 class Logo extends React.Component {
 	constructor(props) {
     super(props);
@@ -8,7 +7,7 @@ class Logo extends React.Component {
 
   render() {
   	return(
-  		<img src="../img/habla_icon.jpg" className={this.props.className}/>
+  		<img src={chrome.extension.getURL("img/habla_logo.png")} className={this.props.className}/>
   	);
   }
 
