@@ -7,7 +7,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 		var username = data.username;
 		chrome.storage.sync.get("groupName", function(data){
 			var groupName = data.groupName;
-			chrome.tabs.sendMessage(tab.id, {action: "initialize", groupName: groupName, username: username});
+			chrome.tabs.sendMessage(tab.id, {action: "toggleDisplay", groupName: groupName, username: username});
 		});
 	});
 });
