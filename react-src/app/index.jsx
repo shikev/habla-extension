@@ -3,20 +3,33 @@ import React from 'react';
 import {render} from 'react-dom';
 import MasterContainer from './MasterContainer.jsx';
 
-class App extends React.Component {
-  render () {
-    return (
-      <div>
-        <MasterContainer />
-      </div>
-    );
-  }
-}
 
 $(document).ready(function(){
-	$("body").append($("<div>", {id: "habla"}));
-	render(<App/>, document.getElementById("habla"));
+	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+	  if (request.action == "initialize") {
+	  	var state = {}		
+	    if (request.groupName && request.username) {
+	      console.log("button-clicked");
+	      state = {
+	        active: "Comments",
+	        username: request.username,
+	        groupName: request.groupName
+	      };
+	    }
+	    // If the user doesn't have a username or group, display join/create group GUI
+	    else {
+	     state = {
+	        active: "Landing"
+	      };
+	    }
+
+	    $("body").append($("<div>", {id: "habla"}));
+		render(<MasterContainer initialState={state}/>, document.getElementById("habla"));
+	  }
+	});
 });
+
+
 
 
 

@@ -8,26 +8,8 @@ class MasterContainer extends React.Component {
 	constructor(props) {
     super(props);
     this.handleRegister = this.handleRegister.bind(this);
-    var that = this;
-    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-      if (request.action == "initialize") {
-        if (request.groupName && request.username) {
-          console.log("button-clicked");
-          that.setState({
-            active: "Comments",
-            username: request.username,
-            groupName: request.groupName
-          });
-        }
-        // If the user doesn't have a username or group, display join/create group GUI
-        else {
-          that.setState({
-            active: "Landing"
-          });
-        }
-      }
-    });
-    this.state = {active: "None"};
+    this.state = this.props.initialState;
+    
   }
 
   handleRegister(data) {
