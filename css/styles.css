@@ -67,6 +67,7 @@
     border: none;
     color: var(--habla-color);
     display: block;
+    font-family: Verdana;
     font-size: 12px;
     margin-left: 50px;
     padding: 0px;
@@ -85,13 +86,14 @@
 
 /*Button base*/
 .landingButton, .generalButton {
-    display: block;
     border-color: var(--habla-color);
     border-radius: 8px;
     border-style: solid;
     box-shadow: none;
     background-color: var(--habla-color);
     color: rgb(256,256,256);
+    display: block;
+    font-family: Verdana;
     height: auto;
     margin: 30px auto;
 }
@@ -103,7 +105,9 @@
 
 /*Input labels*/
 .inputLabel {
+    color: var(--habla-color);
     display: block;
+    font-family: Verdana;
     font-size: 18px;
     font-weight: bold;
     float: left;
@@ -116,6 +120,7 @@
     border-style: solid;
     border-width: 1px;
     float: left;
+    font-family: Verdana;
     font-size: 18px;
     height: 10px;
     padding: 10px;
@@ -124,20 +129,17 @@
 }
 
 #join-group-form, #create-group-form {
+    font-family: Verdana;
     margin: 20px auto;
     text-align: center;
     width: 200px;
 }
 
 .hablaH1 {
+    color: var(--habla-color);
     display: block;
+    font-family: Verdana;
     font-size: 30px;
     margin: 0 auto;
     text-align: center;
-}
-
-/*Everything*/
-body, label, h1 {
-    font-family: Verdana !important;
-    color: var(--habla-color) !important;
 }
