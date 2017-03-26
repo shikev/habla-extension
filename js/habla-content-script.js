@@ -34,7 +34,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/ 	__webpack_require__.p = "http://localhost:3000/";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -48,8 +48,6 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _jquery = __webpack_require__(/*! jquery */ 1);
 	
@@ -67,38 +65,38 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var App = function (_React$Component) {
-	  _inherits(App, _React$Component);
-	
-	  function App() {
-	    _classCallCheck(this, App);
-	
-	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
-	  }
-	
-	  _createClass(App, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_MasterContainer2.default, null)
-	      );
-	    }
-	  }]);
-	
-	  return App;
-	}(_react2.default.Component);
+	window.hablaHasDisplayed = false;
 	
 	(0, _jquery2.default)(document).ready(function () {
-	  (0, _jquery2.default)("body").append((0, _jquery2.default)("<div>", { id: "habla" }));
-	  (0, _reactDom.render)(_react2.default.createElement(App, null), document.getElementById("habla"));
+		console.log("hello");
+		chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+			if (request.action == "toggleDisplay") {
+				if (window.hablaHasDisplayed) {
+					(0, _jquery2.default)("#habla").toggle();
+				} else {
+					// Habla has never been shown
+					window.hablaHasDisplayed = true;
+					var state = {};
+					if (request.groupName && request.username) {
+						console.log("button-clicked");
+						state = {
+							active: "Comments",
+							username: request.username,
+							groupName: request.groupName
+						};
+					}
+					// If the user doesn't have a username or group, display join/create group GUI
+					else {
+							state = {
+								active: "Landing"
+							};
+						}
+	
+					(0, _jquery2.default)("body").append((0, _jquery2.default)("<div>", { id: "habla" }));
+					(0, _reactDom.render)(_react2.default.createElement(_MasterContainer2.default, { initialState: state }), document.getElementById("habla"));
+				}
+			}
+		});
 	});
 
 /***/ },
@@ -109,17 +107,17 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	 * jQuery JavaScript Library v3.1.1
+	 * jQuery JavaScript Library v3.2.1
 	 * https://jquery.com/
 	 *
 	 * Includes Sizzle.js
 	 * https://sizzlejs.com/
 	 *
-	 * Copyright jQuery Foundation and other contributors
+	 * Copyright JS Foundation and other contributors
 	 * Released under the MIT license
 	 * https://jquery.org/license
 	 *
-	 * Date: 2016-09-22T22:30Z
+	 * Date: 2017-03-20T18:59Z
 	 */
 	( function( global, factory ) {
 	
@@ -198,7 +196,7 @@
 	
 	
 	var
-		version = "3.1.1",
+		version = "3.2.1",
 	
 		// Define a local copy of jQuery
 		jQuery = function( selector, context ) {
@@ -346,11 +344,11 @@
 	
 					// Recurse if we're merging plain objects or arrays
 					if ( deep && copy && ( jQuery.isPlainObject( copy ) ||
-						( copyIsArray = jQuery.isArray( copy ) ) ) ) {
+						( copyIsArray = Array.isArray( copy ) ) ) ) {
 	
 						if ( copyIsArray ) {
 							copyIsArray = false;
-							clone = src && jQuery.isArray( src ) ? src : [];
+							clone = src && Array.isArray( src ) ? src : [];
 	
 						} else {
 							clone = src && jQuery.isPlainObject( src ) ? src : {};
@@ -388,8 +386,6 @@
 		isFunction: function( obj ) {
 			return jQuery.type( obj ) === "function";
 		},
-	
-		isArray: Array.isArray,
 	
 		isWindow: function( obj ) {
 			return obj != null && obj === obj.window;
@@ -463,10 +459,6 @@
 		// Microsoft forgot to hump their vendor prefix (#9572)
 		camelCase: function( string ) {
 			return string.replace( rmsPrefix, "ms-" ).replace( rdashAlpha, fcamelCase );
-		},
-	
-		nodeName: function( elem, name ) {
-			return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
 		},
 	
 		each: function( obj, callback ) {
@@ -2953,6 +2945,13 @@
 	
 	var rneedsContext = jQuery.expr.match.needsContext;
 	
+	
+	
+	function nodeName( elem, name ) {
+	
+	  return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
+	
+	};
 	var rsingleTag = ( /^<([a-z][^\/\0>:\x20\t\r\n\f]*)[\x20\t\r\n\f]*\/?>(?:<\/\1>|)$/i );
 	
 	
@@ -3304,7 +3303,18 @@
 			return siblings( elem.firstChild );
 		},
 		contents: function( elem ) {
-			return elem.contentDocument || jQuery.merge( [], elem.childNodes );
+	        if ( nodeName( elem, "iframe" ) ) {
+	            return elem.contentDocument;
+	        }
+	
+	        // Support: IE 9 - 11 only, iOS 7 only, Android Browser <=4.3 only
+	        // Treat the template element as a regular one in browsers that
+	        // don't support it.
+	        if ( nodeName( elem, "template" ) ) {
+	            elem = elem.content || elem;
+	        }
+	
+	        return jQuery.merge( [], elem.childNodes );
 		}
 	}, function( name, fn ) {
 		jQuery.fn[ name ] = function( until, selector ) {
@@ -3402,7 +3412,7 @@
 			fire = function() {
 	
 				// Enforce single-firing
-				locked = options.once;
+				locked = locked || options.once;
 	
 				// Execute callbacks for all pending executions,
 				// respecting firingIndex overrides and runtime changes
@@ -3571,7 +3581,7 @@
 		throw ex;
 	}
 	
-	function adoptValue( value, resolve, reject ) {
+	function adoptValue( value, resolve, reject, noValue ) {
 		var method;
 	
 		try {
@@ -3587,9 +3597,10 @@
 			// Other non-thenables
 			} else {
 	
-				// Support: Android 4.0 only
-				// Strict mode functions invoked without .call/.apply get global-object context
-				resolve.call( undefined, value );
+				// Control `resolve` arguments by letting Array#slice cast boolean `noValue` to integer:
+				// * false: [ value ].slice( 0 ) => resolve( value )
+				// * true: [ value ].slice( 1 ) => resolve()
+				resolve.apply( undefined, [ value ].slice( noValue ) );
 			}
 	
 		// For Promises/A+, convert exceptions into rejections
@@ -3599,7 +3610,7 @@
 	
 			// Support: Android 4.0 only
 			// Strict mode functions invoked without .call/.apply get global-object context
-			reject.call( undefined, value );
+			reject.apply( undefined, [ value ] );
 		}
 	}
 	
@@ -3924,7 +3935,8 @@
 	
 			// Single- and empty arguments are adopted like Promise.resolve
 			if ( remaining <= 1 ) {
-				adoptValue( singleValue, master.done( updateFunc( i ) ).resolve, master.reject );
+				adoptValue( singleValue, master.done( updateFunc( i ) ).resolve, master.reject,
+					!remaining );
 	
 				// Use .then() to unwrap secondary thenables (cf. gh-3000)
 				if ( master.state() === "pending" ||
@@ -3995,15 +4007,6 @@
 		// A counter to track how many items to wait for before
 		// the ready event fires. See #6781
 		readyWait: 1,
-	
-		// Hold (or release) the ready event
-		holdReady: function( hold ) {
-			if ( hold ) {
-				jQuery.readyWait++;
-			} else {
-				jQuery.ready( true );
-			}
-		},
 	
 		// Handle when the DOM is ready
 		ready: function( wait ) {
@@ -4240,7 +4243,7 @@
 			if ( key !== undefined ) {
 	
 				// Support array or space separated string of keys
-				if ( jQuery.isArray( key ) ) {
+				if ( Array.isArray( key ) ) {
 	
 					// If key is an array of keys...
 					// We always set camelCase keys, so remove that.
@@ -4466,7 +4469,7 @@
 	
 				// Speed up dequeue by getting out quickly if this is just a lookup
 				if ( data ) {
-					if ( !queue || jQuery.isArray( data ) ) {
+					if ( !queue || Array.isArray( data ) ) {
 						queue = dataPriv.access( elem, type, jQuery.makeArray( data ) );
 					} else {
 						queue.push( data );
@@ -4843,7 +4846,7 @@
 			ret = [];
 		}
 	
-		if ( tag === undefined || tag && jQuery.nodeName( context, tag ) ) {
+		if ( tag === undefined || tag && nodeName( context, tag ) ) {
 			return jQuery.merge( [ context ], ret );
 		}
 	
@@ -5450,7 +5453,7 @@
 	
 				// For checkbox, fire native event so checked state will be right
 				trigger: function() {
-					if ( this.type === "checkbox" && this.click && jQuery.nodeName( this, "input" ) ) {
+					if ( this.type === "checkbox" && this.click && nodeName( this, "input" ) ) {
 						this.click();
 						return false;
 					}
@@ -5458,7 +5461,7 @@
 	
 				// For cross-browser consistency, don't fire native .click() on links
 				_default: function( event ) {
-					return jQuery.nodeName( event.target, "a" );
+					return nodeName( event.target, "a" );
 				}
 			},
 	
@@ -5735,11 +5738,12 @@
 		rscriptTypeMasked = /^true\/(.*)/,
 		rcleanScript = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g;
 	
+	// Prefer a tbody over its parent table for containing new rows
 	function manipulationTarget( elem, content ) {
-		if ( jQuery.nodeName( elem, "table" ) &&
-			jQuery.nodeName( content.nodeType !== 11 ? content : content.firstChild, "tr" ) ) {
+		if ( nodeName( elem, "table" ) &&
+			nodeName( content.nodeType !== 11 ? content : content.firstChild, "tr" ) ) {
 	
-			return elem.getElementsByTagName( "tbody" )[ 0 ] || elem;
+			return jQuery( ">tbody", elem )[ 0 ] || elem;
 		}
 	
 		return elem;
@@ -6269,12 +6273,18 @@
 	
 	function curCSS( elem, name, computed ) {
 		var width, minWidth, maxWidth, ret,
+	
+			// Support: Firefox 51+
+			// Retrieving style before computed somehow
+			// fixes an issue with getting wrong values
+			// on detached elements
 			style = elem.style;
 	
 		computed = computed || getStyles( elem );
 	
-		// Support: IE <=9 only
-		// getPropertyValue is only needed for .css('filter') (#12537)
+		// getPropertyValue is needed for:
+		//   .css('filter') (IE 9 only, #12537)
+		//   .css('--customProperty) (#3144)
 		if ( computed ) {
 			ret = computed.getPropertyValue( name ) || computed[ name ];
 	
@@ -6340,6 +6350,7 @@
 		// except "table", "table-cell", or "table-caption"
 		// See here for display values: https://developer.mozilla.org/en-US/docs/CSS/display
 		rdisplayswap = /^(none|table(?!-c[ea]).+)/,
+		rcustomProp = /^--/,
 		cssShow = { position: "absolute", visibility: "hidden", display: "block" },
 		cssNormalTransform = {
 			letterSpacing: "0",
@@ -6367,6 +6378,16 @@
 				return name;
 			}
 		}
+	}
+	
+	// Return a property mapped along what jQuery.cssProps suggests or to
+	// a vendor prefixed property.
+	function finalPropName( name ) {
+		var ret = jQuery.cssProps[ name ];
+		if ( !ret ) {
+			ret = jQuery.cssProps[ name ] = vendorPropName( name ) || name;
+		}
+		return ret;
 	}
 	
 	function setPositiveNumber( elem, value, subtract ) {
@@ -6429,43 +6450,30 @@
 	
 	function getWidthOrHeight( elem, name, extra ) {
 	
-		// Start with offset property, which is equivalent to the border-box value
-		var val,
-			valueIsBorderBox = true,
+		// Start with computed style
+		var valueIsBorderBox,
 			styles = getStyles( elem ),
+			val = curCSS( elem, name, styles ),
 			isBorderBox = jQuery.css( elem, "boxSizing", false, styles ) === "border-box";
 	
-		// Support: IE <=11 only
-		// Running getBoundingClientRect on a disconnected node
-		// in IE throws an error.
-		if ( elem.getClientRects().length ) {
-			val = elem.getBoundingClientRect()[ name ];
+		// Computed unit is not pixels. Stop here and return.
+		if ( rnumnonpx.test( val ) ) {
+			return val;
 		}
 	
-		// Some non-html elements return undefined for offsetWidth, so check for null/undefined
-		// svg - https://bugzilla.mozilla.org/show_bug.cgi?id=649285
-		// MathML - https://bugzilla.mozilla.org/show_bug.cgi?id=491668
-		if ( val <= 0 || val == null ) {
+		// Check for style in case a browser which returns unreliable values
+		// for getComputedStyle silently falls back to the reliable elem.style
+		valueIsBorderBox = isBorderBox &&
+			( support.boxSizingReliable() || val === elem.style[ name ] );
 	
-			// Fall back to computed then uncomputed css if necessary
-			val = curCSS( elem, name, styles );
-			if ( val < 0 || val == null ) {
-				val = elem.style[ name ];
-			}
-	
-			// Computed unit is not pixels. Stop here and return.
-			if ( rnumnonpx.test( val ) ) {
-				return val;
-			}
-	
-			// Check for style in case a browser which returns unreliable values
-			// for getComputedStyle silently falls back to the reliable elem.style
-			valueIsBorderBox = isBorderBox &&
-				( support.boxSizingReliable() || val === elem.style[ name ] );
-	
-			// Normalize "", auto, and prepare for extra
-			val = parseFloat( val ) || 0;
+		// Fall back to offsetWidth/Height when value is "auto"
+		// This happens for inline elements with no explicit setting (gh-3571)
+		if ( val === "auto" ) {
+			val = elem[ "offset" + name[ 0 ].toUpperCase() + name.slice( 1 ) ];
 		}
+	
+		// Normalize "", auto, and prepare for extra
+		val = parseFloat( val ) || 0;
 	
 		// Use the active box-sizing model to add/subtract irrelevant styles
 		return ( val +
@@ -6530,10 +6538,15 @@
 			// Make sure that we're working with the right name
 			var ret, type, hooks,
 				origName = jQuery.camelCase( name ),
+				isCustomProp = rcustomProp.test( name ),
 				style = elem.style;
 	
-			name = jQuery.cssProps[ origName ] ||
-				( jQuery.cssProps[ origName ] = vendorPropName( origName ) || origName );
+			// Make sure that we're working with the right name. We don't
+			// want to query the value if it is a CSS custom property
+			// since they are user-defined.
+			if ( !isCustomProp ) {
+				name = finalPropName( origName );
+			}
 	
 			// Gets hook for the prefixed version, then unprefixed version
 			hooks = jQuery.cssHooks[ name ] || jQuery.cssHooks[ origName ];
@@ -6569,7 +6582,11 @@
 				if ( !hooks || !( "set" in hooks ) ||
 					( value = hooks.set( elem, value, extra ) ) !== undefined ) {
 	
-					style[ name ] = value;
+					if ( isCustomProp ) {
+						style.setProperty( name, value );
+					} else {
+						style[ name ] = value;
+					}
 				}
 	
 			} else {
@@ -6588,11 +6605,15 @@
 	
 		css: function( elem, name, extra, styles ) {
 			var val, num, hooks,
-				origName = jQuery.camelCase( name );
+				origName = jQuery.camelCase( name ),
+				isCustomProp = rcustomProp.test( name );
 	
-			// Make sure that we're working with the right name
-			name = jQuery.cssProps[ origName ] ||
-				( jQuery.cssProps[ origName ] = vendorPropName( origName ) || origName );
+			// Make sure that we're working with the right name. We don't
+			// want to modify the value if it is a CSS custom property
+			// since they are user-defined.
+			if ( !isCustomProp ) {
+				name = finalPropName( origName );
+			}
 	
 			// Try prefixed name followed by the unprefixed name
 			hooks = jQuery.cssHooks[ name ] || jQuery.cssHooks[ origName ];
@@ -6617,6 +6638,7 @@
 				num = parseFloat( val );
 				return extra === true || isFinite( num ) ? num || 0 : val;
 			}
+	
 			return val;
 		}
 	} );
@@ -6716,7 +6738,7 @@
 					map = {},
 					i = 0;
 	
-				if ( jQuery.isArray( name ) ) {
+				if ( Array.isArray( name ) ) {
 					styles = getStyles( elem );
 					len = name.length;
 	
@@ -6854,13 +6876,18 @@
 	
 	
 	var
-		fxNow, timerId,
+		fxNow, inProgress,
 		rfxtypes = /^(?:toggle|show|hide)$/,
 		rrun = /queueHooks$/;
 	
-	function raf() {
-		if ( timerId ) {
-			window.requestAnimationFrame( raf );
+	function schedule() {
+		if ( inProgress ) {
+			if ( document.hidden === false && window.requestAnimationFrame ) {
+				window.requestAnimationFrame( schedule );
+			} else {
+				window.setTimeout( schedule, jQuery.fx.interval );
+			}
+	
 			jQuery.fx.tick();
 		}
 	}
@@ -7087,7 +7114,7 @@
 			name = jQuery.camelCase( index );
 			easing = specialEasing[ name ];
 			value = props[ index ];
-			if ( jQuery.isArray( value ) ) {
+			if ( Array.isArray( value ) ) {
 				easing = value[ 1 ];
 				value = props[ index ] = value[ 0 ];
 			}
@@ -7146,12 +7173,19 @@
 	
 				deferred.notifyWith( elem, [ animation, percent, remaining ] );
 	
+				// If there's more to do, yield
 				if ( percent < 1 && length ) {
 					return remaining;
-				} else {
-					deferred.resolveWith( elem, [ animation ] );
-					return false;
 				}
+	
+				// If this was an empty animation, synthesize a final progress notification
+				if ( !length ) {
+					deferred.notifyWith( elem, [ animation, 1, 0 ] );
+				}
+	
+				// Resolve the animation and report its conclusion
+				deferred.resolveWith( elem, [ animation ] );
+				return false;
 			},
 			animation = deferred.promise( {
 				elem: elem,
@@ -7216,6 +7250,13 @@
 			animation.opts.start.call( elem, animation );
 		}
 	
+		// Attach callbacks from options
+		animation
+			.progress( animation.opts.progress )
+			.done( animation.opts.done, animation.opts.complete )
+			.fail( animation.opts.fail )
+			.always( animation.opts.always );
+	
 		jQuery.fx.timer(
 			jQuery.extend( tick, {
 				elem: elem,
@@ -7224,11 +7265,7 @@
 			} )
 		);
 	
-		// attach callbacks from options
-		return animation.progress( animation.opts.progress )
-			.done( animation.opts.done, animation.opts.complete )
-			.fail( animation.opts.fail )
-			.always( animation.opts.always );
+		return animation;
 	}
 	
 	jQuery.Animation = jQuery.extend( Animation, {
@@ -7279,8 +7316,8 @@
 			easing: fn && easing || easing && !jQuery.isFunction( easing ) && easing
 		};
 	
-		// Go to the end state if fx are off or if document is hidden
-		if ( jQuery.fx.off || document.hidden ) {
+		// Go to the end state if fx are off
+		if ( jQuery.fx.off ) {
 			opt.duration = 0;
 	
 		} else {
@@ -7472,7 +7509,7 @@
 		for ( ; i < timers.length; i++ ) {
 			timer = timers[ i ];
 	
-			// Checks the timer has not already been removed
+			// Run the timer and safely remove it when done (allowing for external removal)
 			if ( !timer() && timers[ i ] === timer ) {
 				timers.splice( i--, 1 );
 			}
@@ -7486,30 +7523,21 @@
 	
 	jQuery.fx.timer = function( timer ) {
 		jQuery.timers.push( timer );
-		if ( timer() ) {
-			jQuery.fx.start();
-		} else {
-			jQuery.timers.pop();
-		}
+		jQuery.fx.start();
 	};
 	
 	jQuery.fx.interval = 13;
 	jQuery.fx.start = function() {
-		if ( !timerId ) {
-			timerId = window.requestAnimationFrame ?
-				window.requestAnimationFrame( raf ) :
-				window.setInterval( jQuery.fx.tick, jQuery.fx.interval );
+		if ( inProgress ) {
+			return;
 		}
+	
+		inProgress = true;
+		schedule();
 	};
 	
 	jQuery.fx.stop = function() {
-		if ( window.cancelAnimationFrame ) {
-			window.cancelAnimationFrame( timerId );
-		} else {
-			window.clearInterval( timerId );
-		}
-	
-		timerId = null;
+		inProgress = null;
 	};
 	
 	jQuery.fx.speeds = {
@@ -7626,7 +7654,7 @@
 			type: {
 				set: function( elem, value ) {
 					if ( !support.radioValue && value === "radio" &&
-						jQuery.nodeName( elem, "input" ) ) {
+						nodeName( elem, "input" ) ) {
 						var val = elem.value;
 						elem.setAttribute( "type", value );
 						if ( val ) {
@@ -8057,7 +8085,7 @@
 				} else if ( typeof val === "number" ) {
 					val += "";
 	
-				} else if ( jQuery.isArray( val ) ) {
+				} else if ( Array.isArray( val ) ) {
 					val = jQuery.map( val, function( value ) {
 						return value == null ? "" : value + "";
 					} );
@@ -8116,7 +8144,7 @@
 								// Don't return options that are disabled or in a disabled optgroup
 								!option.disabled &&
 								( !option.parentNode.disabled ||
-									!jQuery.nodeName( option.parentNode, "optgroup" ) ) ) {
+									!nodeName( option.parentNode, "optgroup" ) ) ) {
 	
 							// Get the specific value for the option
 							value = jQuery( option ).val();
@@ -8168,7 +8196,7 @@
 	jQuery.each( [ "radio", "checkbox" ], function() {
 		jQuery.valHooks[ this ] = {
 			set: function( elem, value ) {
-				if ( jQuery.isArray( value ) ) {
+				if ( Array.isArray( value ) ) {
 					return ( elem.checked = jQuery.inArray( jQuery( elem ).val(), value ) > -1 );
 				}
 			}
@@ -8463,7 +8491,7 @@
 	function buildParams( prefix, obj, traditional, add ) {
 		var name;
 	
-		if ( jQuery.isArray( obj ) ) {
+		if ( Array.isArray( obj ) ) {
 	
 			// Serialize array item.
 			jQuery.each( obj, function( i, v ) {
@@ -8515,7 +8543,7 @@
 			};
 	
 		// If an array was passed in, assume that it is an array of form elements.
-		if ( jQuery.isArray( a ) || ( a.jquery && !jQuery.isPlainObject( a ) ) ) {
+		if ( Array.isArray( a ) || ( a.jquery && !jQuery.isPlainObject( a ) ) ) {
 	
 			// Serialize the form elements
 			jQuery.each( a, function() {
@@ -8561,7 +8589,7 @@
 					return null;
 				}
 	
-				if ( jQuery.isArray( val ) ) {
+				if ( Array.isArray( val ) ) {
 					return jQuery.map( val, function( val ) {
 						return { name: elem.name, value: val.replace( rCRLF, "\r\n" ) };
 					} );
@@ -9986,13 +10014,6 @@
 	
 	
 	
-	/**
-	 * Gets a window from an element
-	 */
-	function getWindow( elem ) {
-		return jQuery.isWindow( elem ) ? elem : elem.nodeType === 9 && elem.defaultView;
-	}
-	
 	jQuery.offset = {
 		setOffset: function( elem, options, i ) {
 			var curPosition, curLeft, curCSSTop, curTop, curOffset, curCSSLeft, calculatePosition,
@@ -10057,13 +10078,14 @@
 					} );
 			}
 	
-			var docElem, win, rect, doc,
+			var doc, docElem, rect, win,
 				elem = this[ 0 ];
 	
 			if ( !elem ) {
 				return;
 			}
 	
+			// Return zeros for disconnected and hidden (display: none) elements (gh-2310)
 			// Support: IE <=11 only
 			// Running getBoundingClientRect on a
 			// disconnected node in IE throws an error
@@ -10073,20 +10095,14 @@
 	
 			rect = elem.getBoundingClientRect();
 	
-			// Make sure element is not hidden (display: none)
-			if ( rect.width || rect.height ) {
-				doc = elem.ownerDocument;
-				win = getWindow( doc );
-				docElem = doc.documentElement;
+			doc = elem.ownerDocument;
+			docElem = doc.documentElement;
+			win = doc.defaultView;
 	
-				return {
-					top: rect.top + win.pageYOffset - docElem.clientTop,
-					left: rect.left + win.pageXOffset - docElem.clientLeft
-				};
-			}
-	
-			// Return zeros for disconnected and hidden elements (gh-2310)
-			return rect;
+			return {
+				top: rect.top + win.pageYOffset - docElem.clientTop,
+				left: rect.left + win.pageXOffset - docElem.clientLeft
+			};
 		},
 	
 		position: function() {
@@ -10112,7 +10128,7 @@
 	
 				// Get correct offsets
 				offset = this.offset();
-				if ( !jQuery.nodeName( offsetParent[ 0 ], "html" ) ) {
+				if ( !nodeName( offsetParent[ 0 ], "html" ) ) {
 					parentOffset = offsetParent.offset();
 				}
 	
@@ -10159,7 +10175,14 @@
 	
 		jQuery.fn[ method ] = function( val ) {
 			return access( this, function( elem, method, val ) {
-				var win = getWindow( elem );
+	
+				// Coalesce documents and windows
+				var win;
+				if ( jQuery.isWindow( elem ) ) {
+					win = elem;
+				} else if ( elem.nodeType === 9 ) {
+					win = elem.defaultView;
+				}
 	
 				if ( val === undefined ) {
 					return win ? win[ prop ] : elem[ method ];
@@ -10268,7 +10291,16 @@
 		}
 	} );
 	
+	jQuery.holdReady = function( hold ) {
+		if ( hold ) {
+			jQuery.readyWait++;
+		} else {
+			jQuery.ready( true );
+		}
+	};
+	jQuery.isArray = Array.isArray;
 	jQuery.parseJSON = JSON.parse;
+	jQuery.nodeName = nodeName;
 	
 	
 	
@@ -10321,7 +10353,6 @@
 	if ( !noGlobal ) {
 		window.jQuery = window.$ = jQuery;
 	}
-	
 	
 	
 	
@@ -30521,7 +30552,7 @@
 	
 	var _LandingContainer2 = _interopRequireDefault(_LandingContainer);
 	
-	var _CommentsContainer = __webpack_require__(/*! ./CommentsContainer.jsx */ 165);
+	var _CommentsContainer = __webpack_require__(/*! ./CommentsContainer.jsx */ 166);
 	
 	var _CommentsContainer2 = _interopRequireDefault(_CommentsContainer);
 	
@@ -30541,35 +30572,27 @@
 	
 	    var _this = _possibleConstructorReturn(this, (MasterContainer.__proto__ || Object.getPrototypeOf(MasterContainer)).call(this, props));
 	
-	    var that = _this;
-	    chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-	      if (request.action == "initialize") {
-	        if (request.groupName && request.username) {
-	          console.log("button-clicked");
-	          that.setState({
-	            active: "Comments",
-	            username: request.username,
-	            groupName: request.groupName
-	          });
-	        }
-	        // If the user doesn't have a username or group, display join/create group GUI
-	        else {
-	            that.setState({
-	              active: "Landing"
-	            });
-	          }
-	      }
-	    });
-	    _this.state = { active: "None" };
+	    _this.handleRegister = _this.handleRegister.bind(_this);
+	    _this.state = _this.props.initialState;
+	
 	    return _this;
 	  }
 	
 	  _createClass(MasterContainer, [{
+	    key: 'handleRegister',
+	    value: function handleRegister(data) {
+	      this.setState({
+	        active: "Comments",
+	        username: data.username,
+	        groupName: data.groupName
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var display = "";
 	      if (this.state.active === "Landing") {
-	        display = _react2.default.createElement(_LandingContainer2.default, null);
+	        display = _react2.default.createElement(_LandingContainer2.default, { onRegister: this.handleRegister });
 	      } else if (this.state.active === "Comments") {
 	        display = _react2.default.createElement(_CommentsContainer2.default, { username: this.state.username, groupName: this.state.groupName });
 	      }
@@ -30627,7 +30650,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var config = __webpack_require__(/*! ./Config.jsx */ 169);
+	var config = __webpack_require__(/*! ./Config.jsx */ 165);
 	
 	var InitialLandingMenu = function (_React$Component) {
 	  _inherits(InitialLandingMenu, _React$Component);
@@ -30642,14 +30665,14 @@
 	    key: 'render',
 	    value: function render() {
 	
-	      var logoClasses = "large";
-	      var landingButtonClasses = "landingButton";
+	      var hablaLogoClasses = "hablaLogo";
+	      var hablaLandingButtonClasses = "hablaLandingButton";
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_Logo2.default, { className: logoClasses }),
-	        _react2.default.createElement(_Button2.default, { className: landingButtonClasses, text: 'Join Group', onClick: this.props.onJoinSelect }),
-	        _react2.default.createElement(_Button2.default, { className: landingButtonClasses, text: 'Create Group', onClick: this.props.onCreateSelect })
+	        _react2.default.createElement(_Logo2.default, { className: hablaLogoClasses }),
+	        _react2.default.createElement(_Button2.default, { className: hablaLandingButtonClasses, text: 'Join Group', onClick: this.props.onJoinSelect }),
+	        _react2.default.createElement(_Button2.default, { className: hablaLandingButtonClasses, text: 'Create Group', onClick: this.props.onCreateSelect })
 	      );
 	    }
 	  }]);
@@ -30685,41 +30708,44 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var hablaLogoClasses = "hablaLogo";
+	      var back = "<< Back";
 	      return _react2.default.createElement(
 	        'div',
 	        null,
+	        _react2.default.createElement(_Logo2.default, { className: hablaLogoClasses }),
 	        _react2.default.createElement(
-	          'h2',
-	          null,
+	          'h1',
+	          { className: 'hablaH1' },
 	          this.props.title
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { onClick: this.props.onBack },
-	          'Go Back'
 	        ),
 	        _react2.default.createElement(
 	          'form',
 	          { id: this.props.id, onSubmit: this.processSubmit },
 	          _react2.default.createElement(
 	            'label',
-	            null,
-	            'Your Name:',
-	            _react2.default.createElement(_Input.TextInput, { name: 'username' })
+	            { className: 'hablaInputLabel' },
+	            'Group name:'
 	          ),
+	          _react2.default.createElement(_Input.TextInput, { className: 'hablaInputBox', name: 'groupName' }),
 	          _react2.default.createElement(
 	            'label',
-	            null,
-	            'Group Name:',
-	            _react2.default.createElement(_Input.TextInput, { name: 'groupName' })
+	            { className: 'hablaInputLabel' },
+	            'Group password:'
 	          ),
+	          _react2.default.createElement(_Input.PasswordInput, { className: 'hablaInputBox', name: 'groupPassword' }),
 	          _react2.default.createElement(
 	            'label',
-	            null,
-	            'Group Password:',
-	            _react2.default.createElement(_Input.PasswordInput, { name: 'groupPassword' })
+	            { className: 'hablaInputLabel' },
+	            'Your username:'
 	          ),
-	          _react2.default.createElement(_Input.SubmitInput, { text: 'Submit', name: 'formSubmit' })
+	          _react2.default.createElement(_Input.TextInput, { className: 'hablaInputBox', name: 'username' }),
+	          _react2.default.createElement(_Input.SubmitInput, { className: 'hablaGeneralButton', name: 'formSubmit' })
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { className: 'hablaBackButton', onClick: this.props.onBack },
+	          back
 	        )
 	      );
 	    }
@@ -30754,6 +30780,7 @@
 	  _createClass(LandingContainer, [{
 	    key: 'register',
 	    value: function register(data, registerPath) {
+	      var that = this;
 	      console.log(data);
 	      _jquery2.default.ajax({
 	        type: "POST",
@@ -30764,12 +30791,18 @@
 	        // Set username and group in chrome.storage
 	        chrome.runtime.sendMessage({ action: "store", data: data }, function (response) {
 	          console.log(response);
+	          if (response.message == "success") {
+	            // Switch view to CommentsContainer
+	            that.props.onRegister(data);
+	          } else {
+	            alert("Error storing elements in storage, check your data/env", response);
+	          }
 	        });
 	      }).fail(function (data) {
 	        var errors = data["errors"];
 	        // TODO: handle error
 	        // (Pass errors to the child Landing Form)
-	        alert("Error posting comment to server:", data);
+	        alert("Error Registering on server:", data);
 	      });;
 	    }
 	  }, {
@@ -30808,8 +30841,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var joinForm = this.state.active === "showJoinForm" ? _react2.default.createElement(LandingForm, { id: 'join-group-form', title: 'Join Group', onBack: this.handleBackSelect, onSubmit: this.handleJoinFormSubmit }) : "";
-	      var createForm = this.state.active === "showCreateForm" ? _react2.default.createElement(LandingForm, { id: 'create-group-form', title: 'Create Group', onBack: this.handleBackSelect, onSubmit: this.handleCreateFormSubmit }) : "";
+	      var joinForm = this.state.active === "showJoinForm" ? _react2.default.createElement(LandingForm, { id: 'habla-join-group-form', title: 'Join Group', onBack: this.handleBackSelect, onSubmit: this.handleJoinFormSubmit }) : "";
+	      var createForm = this.state.active === "showCreateForm" ? _react2.default.createElement(LandingForm, { id: 'habla-create-group-form', title: 'Create Group', onBack: this.handleBackSelect, onSubmit: this.handleCreateFormSubmit }) : "";
 	      var initial = this.state.active === "showInitial" ? _react2.default.createElement(InitialLandingMenu, { onCreateSelect: this.handleCreateSelect, onJoinSelect: this.handleJoinSelect }) : "";
 	
 	      return _react2.default.createElement(
@@ -30866,7 +30899,7 @@
 	  _createClass(Logo, [{
 	    key: "render",
 	    value: function render() {
-	      return _react2.default.createElement("img", { src: "../img/habla_icon.jpg", className: this.props.className });
+	      return _react2.default.createElement("img", { src: chrome.extension.getURL("img/habla_logo.png"), className: this.props.className });
 	    }
 	  }]);
 	
@@ -30976,7 +31009,7 @@
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      return _react2.default.createElement("input", { type: "password", name: this.props.name, value: this.state.value, onChange: this.handleChange });
+	      return _react2.default.createElement("input", { type: "password", className: this.props.className, name: this.props.name, value: this.state.value, onChange: this.handleChange });
 	    }
 	  }]);
 	
@@ -31004,7 +31037,7 @@
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      return _react2.default.createElement("input", { type: "text", name: this.props.name, value: this.state.value, onChange: this.handleChange });
+	      return _react2.default.createElement("input", { type: "text", className: this.props.className, name: this.props.name, value: this.state.value, onChange: this.handleChange });
 	    }
 	  }]);
 	
@@ -31023,7 +31056,7 @@
 	  _createClass(SubmitInput, [{
 	    key: "render",
 	    value: function render() {
-	      return _react2.default.createElement("input", { type: "submit", name: this.props.name, text: this.props.text });
+	      return _react2.default.createElement("input", { type: "submit", className: this.props.className, name: this.props.name, text: this.props.text });
 	    }
 	  }]);
 	
@@ -31036,6 +31069,21 @@
 
 /***/ },
 /* 165 */
+/*!************************!*\
+  !*** ./app/Config.jsx ***!
+  \************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	var settings = {
+		baseUrl: "http://localhost:3000/"
+	};
+	
+	exports.settings = settings;
+
+/***/ },
+/* 166 */
 /*!***********************************!*\
   !*** ./app/CommentsContainer.jsx ***!
   \***********************************/
@@ -31057,11 +31105,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _CommentBox = __webpack_require__(/*! ./CommentBox.jsx */ 166);
+	var _CommentBox = __webpack_require__(/*! ./CommentBox.jsx */ 167);
 	
 	var _CommentBox2 = _interopRequireDefault(_CommentBox);
 	
-	var _Comment = __webpack_require__(/*! ./Comment.jsx */ 167);
+	var _Comment = __webpack_require__(/*! ./Comment.jsx */ 169);
 	
 	var _Comment2 = _interopRequireDefault(_Comment);
 	
@@ -31074,7 +31122,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var helpers = __webpack_require__(/*! ./Helpers.jsx */ 168);
-	var config = __webpack_require__(/*! ./Config.jsx */ 169);
+	var config = __webpack_require__(/*! ./Config.jsx */ 165);
 	
 	// Contains name of group.
 	
@@ -31092,13 +31140,9 @@
 	    value: function render() {
 	
 	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'h2',
-	          null,
-	          this.props.groupName
-	        )
+	        'p',
+	        { className: 'hablaCommentsHeader' },
+	        this.props.groupName
 	      );
 	    }
 	  }]);
@@ -31116,6 +31160,8 @@
 	
 	    var _this2 = _possibleConstructorReturn(this, (CommentSection.__proto__ || Object.getPrototypeOf(CommentSection)).call(this, props));
 	
+	    _this2.handleCommentSubmit = _this2.handleCommentSubmit.bind(_this2);
+	    _this2.addComment = _this2.addComment.bind(_this2);
 	    _this2.state = { comments: [] };
 	    // ajax request list of comments
 	    var that = _this2;
@@ -31137,7 +31183,7 @@
 	      // },
 	      // id2: {
 	      //			children: [array of comments]
-	      //      poster: username,
+	      //      posterName: username,
 	      //			timestamp: time
 	      // 			content: "content"
 	      // }
@@ -31161,12 +31207,58 @@
 	  }
 	
 	  _createClass(CommentSection, [{
+	    key: 'addComment',
+	    value: function addComment(data) {
+	      var comment = data.comment;
+	      console.log(comment);
+	      var parentId = comment.parentId;
+	      var comments = this.state.comments;
+	      // If top level comment
+	      if (parentId == 0) {
+	        comments.push(comment);
+	      } else {
+	        for (var i = 0; i < comments.length; i++) {
+	          if (comments[i].id == parentId) {
+	            comments[i].children.push(comment);
+	            break;
+	          }
+	        }
+	      }
+	      this.setState({
+	        comments: comments
+	      });
+	    }
+	  }, {
+	    key: 'handleCommentSubmit',
+	    value: function handleCommentSubmit(data) {
+	      // postData = {
+	      //   url: habla.utility.MD5(window.location.href),
+	      //   content: $commentBox.val(),
+	      //   groupName: "fdsa"
+	      // };
+	      var that = this;
+	      _jquery2.default.ajax({
+	        type: "POST",
+	        url: config.settings.baseUrl + "api/v1/comments",
+	        data: data,
+	        dataType: "json"
+	      }).done(function (comment) {
+	        // A comment is returned upon success
+	
+	        that.addComment(comment);
+	      }).fail(function (data) {
+	        // Handle error posting comment on the UI
+	        alert("Error posting comment to server:", data);
+	      });;
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var commentElements = [];
 	      for (var i = 0; i < this.state.comments.length; i++) {
-	        commentElements.push(_react2.default.createElement(_Comment2.default, { data: this.state.comments[i] }));
+	        commentElements.push(_react2.default.createElement(_Comment2.default, { replyBoxId: "reply-box-" + this.state.comments[i].id, id: this.state.comments[i].id, key: this.state.comments[i].id, data: this.state.comments[i], username: this.props.username, groupName: this.props.groupName, onReply: this.handleCommentSubmit }));
 	      }
+	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -31175,7 +31267,7 @@
 	          null,
 	          commentElements
 	        ),
-	        _react2.default.createElement(_CommentBox2.default, null)
+	        _react2.default.createElement(_CommentBox2.default, { id: 'habla-top-level-comment-box', username: this.props.username, groupName: this.props.groupName, onSubmit: this.handleCommentSubmit })
 	      );
 	    }
 	  }]);
@@ -31199,7 +31291,6 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'fuck',
 	        _react2.default.createElement(Header, { groupName: this.props.groupName }),
 	        _react2.default.createElement(CommentSection, { username: this.props.username, groupName: this.props.groupName })
 	      );
@@ -31212,7 +31303,7 @@
 	exports.default = CommentsContainer;
 
 /***/ },
-/* 166 */
+/* 167 */
 /*!****************************!*\
   !*** ./app/CommentBox.jsx ***!
   \****************************/
@@ -31226,9 +31317,15 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _jquery = __webpack_require__(/*! jquery */ 1);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
 	var _react = __webpack_require__(/*! react */ 2);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _Input = __webpack_require__(/*! ./Input.jsx */ 164);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -31237,6 +31334,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var helpers = __webpack_require__(/*! ./Helpers.jsx */ 168);
 	
 	// Comment Box has a parent that it's "replying" to. 
 	//If the parent is "null" then this comment box corresponds to a top level comment
@@ -31247,14 +31346,50 @@
 	  function CommentBox(props) {
 	    _classCallCheck(this, CommentBox);
 	
-	    return _possibleConstructorReturn(this, (CommentBox.__proto__ || Object.getPrototypeOf(CommentBox)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (CommentBox.__proto__ || Object.getPrototypeOf(CommentBox)).call(this, props));
+	
+	    _this.processSubmit = _this.processSubmit.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(CommentBox, [{
+	    key: 'processSubmit',
+	    value: function processSubmit(event) {
+	      event.preventDefault();
+	      var dataArray = (0, _jquery2.default)("#" + this.props.id).serializeArray();
+	      var data = {};
+	      for (var i = 0; i < dataArray.length; i++) {
+	        var name = dataArray[i]["name"];
+	        var value = dataArray[i]["value"];
+	        data[name] = value;
+	      }
+	      data["url"] = helpers.hashes.MD5(window.location.href);
+	
+	      this.props.onSubmit(data);
+	      (0, _jquery2.default)("#" + this.props.id + "-textarea").val("");
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	
-	      return _react2.default.createElement('div', null);
+	      // TODO: MODULARIZE THE INPUTS HERE
+	      console.log(this.props);
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'form',
+	          { id: this.props.id, onSubmit: this.processSubmit },
+	          _react2.default.createElement(
+	            'p',
+	            { className: 'hablaSubduedUsername' },
+	            this.props.username
+	          ),
+	          _react2.default.createElement('textarea', { id: this.props.id + "-textarea", rows: '4', cols: '50', name: 'content', form: this.props.id, placeholder: 'Type your comment here...' }),
+	          _react2.default.createElement('input', { type: 'hidden', name: 'username', value: this.props.username }),
+	          _react2.default.createElement('input', { type: 'hidden', name: 'groupName', value: this.props.groupName }),
+	          _react2.default.createElement(_Input.SubmitInput, { className: 'hablaPostButton', name: 'formSubmit' })
+	        )
+	      );
 	    }
 	  }]);
 	
@@ -31262,83 +31397,6 @@
 	}(_react2.default.Component);
 	
 	exports.default = CommentBox;
-
-/***/ },
-/* 167 */
-/*!*************************!*\
-  !*** ./app/Comment.jsx ***!
-  \*************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var CommentFooter = function (_React$Component) {
-	  _inherits(CommentFooter, _React$Component);
-	
-	  function CommentFooter(props) {
-	    _classCallCheck(this, CommentFooter);
-	
-	    return _possibleConstructorReturn(this, (CommentFooter.__proto__ || Object.getPrototypeOf(CommentFooter)).call(this, props));
-	  }
-	
-	  _createClass(CommentFooter, [{
-	    key: 'render',
-	    value: function render() {
-	
-	      return _react2.default.createElement('div', null);
-	    }
-	  }]);
-	
-	  return CommentFooter;
-	}(_react2.default.Component);
-	
-	// Consists of Username, Content, CommentFooter, Chidren Comments	
-	
-	var Comment = function (_React$Component2) {
-	  _inherits(Comment, _React$Component2);
-	
-	  function Comment(props) {
-	    _classCallCheck(this, Comment);
-	
-	    return _possibleConstructorReturn(this, (Comment.__proto__ || Object.getPrototypeOf(Comment)).call(this, props));
-	  }
-	
-	  _createClass(Comment, [{
-	    key: 'render',
-	    value: function render() {
-	      // Render children after 
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        this.props.data.poster,
-	        this.props.data.content,
-	        _react2.default.createElement(CommentFooter, null)
-	      );
-	    }
-	  }]);
-	
-	  return Comment;
-	}(_react2.default.Component);
-	
-	exports.default = Comment;
 
 /***/ },
 /* 168 */
@@ -31577,18 +31635,257 @@
 
 /***/ },
 /* 169 */
-/*!************************!*\
-  !*** ./app/Config.jsx ***!
-  \************************/
-/***/ function(module, exports) {
+/*!*************************!*\
+  !*** ./app/Comment.jsx ***!
+  \*************************/
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
-	var settings = {
-		baseUrl: "http://localhost:3000/"
-	};
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
-	exports.settings = settings;
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _jquery = __webpack_require__(/*! jquery */ 1);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	var _react = __webpack_require__(/*! react */ 2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Input = __webpack_require__(/*! ./Input.jsx */ 164);
+	
+	var _Reply = __webpack_require__(/*! ./Reply.jsx */ 170);
+	
+	var _Reply2 = _interopRequireDefault(_Reply);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var helpers = __webpack_require__(/*! ./Helpers.jsx */ 168);
+	
+	var Comment = function (_React$Component) {
+	  _inherits(Comment, _React$Component);
+	
+	  function Comment(props) {
+	    _classCallCheck(this, Comment);
+	
+	    var _this = _possibleConstructorReturn(this, (Comment.__proto__ || Object.getPrototypeOf(Comment)).call(this, props));
+	
+	    _this.processReply = _this.processReply.bind(_this);
+	    _this.displayReplyBox = _this.displayReplyBox.bind(_this);
+	    _this.state = { showReply: false };
+	    return _this;
+	  }
+	
+	  _createClass(Comment, [{
+	    key: 'processReply',
+	    value: function processReply(event) {
+	      event.preventDefault();
+	      var dataArray = (0, _jquery2.default)("#" + this.props.replyBoxId).serializeArray();
+	      var data = {};
+	      for (var i = 0; i < dataArray.length; i++) {
+	        var name = dataArray[i]["name"];
+	        var value = dataArray[i]["value"];
+	        data[name] = value;
+	      }
+	      data["url"] = helpers.hashes.MD5(window.location.href);
+	      this.setState({
+	        showReply: false
+	      });
+	      this.props.onReply(data);
+	    }
+	  }, {
+	    key: 'displayReplyBox',
+	    value: function displayReplyBox(event) {
+	      console.log("display reply button clicked");
+	      event.preventDefault();
+	      this.setState({
+	        showReply: true
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      // Render children after 
+	      var posterName = this.props.data.posterName;
+	      var content = this.props.data.content;
+	      var id = this.props.data.id;
+	      var timestamp = this.props.data.timestamp;
+	      var children = this.props.data.children;
+	      var replyUsername = "";
+	      var replyForm = "";
+	      var replyElements = [];
+	      for (var i = 0; i < children.length; i++) {
+	        replyElements.push(_react2.default.createElement(_Reply2.default, { key: children[i].id, data: children[i] }));
+	      }
+	
+	      var hablaAdminIcon = "";
+	      console.log(this.props.data.privilege);
+	      if (this.props.data.privilege == "admin") {
+	        hablaAdminIcon = _react2.default.createElement('img', { src: chrome.extension.getURL("img/admin_icon.png"), className: 'hablaAdminIcon' });
+	      }
+	      if (this.state.showReply == true) {
+	        replyUsername = _react2.default.createElement(
+	          'p',
+	          { className: 'hablaSubduedUsername' },
+	          this.props.username
+	        );
+	        replyForm = _react2.default.createElement(
+	          'form',
+	          { className: 'hablaReplyCommentBox', id: this.props.replyBoxId, onSubmit: this.processReply },
+	          _react2.default.createElement('textarea', { className: 'hablaReplyCommentTextArea', id: this.props.replyBoxId + "-textarea", rows: '4', cols: '50', name: 'content', form: this.props.replyBoxId, placeholder: 'Type your comment here...' }),
+	          _react2.default.createElement('input', { type: 'hidden', name: 'username', value: this.props.username }),
+	          _react2.default.createElement('input', { type: 'hidden', name: 'groupName', value: this.props.groupName }),
+	          _react2.default.createElement('input', { type: 'hidden', name: 'parentId', value: this.props.id }),
+	          _react2.default.createElement(_Input.SubmitInput, { className: 'hablaPostButton', name: 'formSubmit' })
+	        );
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'hablaComment' },
+	        _react2.default.createElement(
+	          'span',
+	          null,
+	          hablaAdminIcon,
+	          _react2.default.createElement(
+	            'h2',
+	            { className: 'hablaH2' },
+	            posterName
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          { className: 'hablaCommentText' },
+	          content
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'hablaReplyTimestamp' },
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'hablaReplyButton', onClick: this.displayReplyBox },
+	            'Reply'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            { className: 'hablaTimestamp' },
+	            timestamp
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'hablaReplySection' },
+	          replyElements,
+	          replyUsername,
+	          replyForm
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Comment;
+	}(_react2.default.Component);
+	
+	exports.default = Comment;
+
+/***/ },
+/* 170 */
+/*!***********************!*\
+  !*** ./app/Reply.jsx ***!
+  \***********************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Input = __webpack_require__(/*! ./Input.jsx */ 164);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var helpers = __webpack_require__(/*! ./Helpers.jsx */ 168);
+	
+	var Reply = function (_React$Component) {
+	  _inherits(Reply, _React$Component);
+	
+	  function Reply(props) {
+	    _classCallCheck(this, Reply);
+	
+	    return _possibleConstructorReturn(this, (Reply.__proto__ || Object.getPrototypeOf(Reply)).call(this, props));
+	  }
+	
+	  _createClass(Reply, [{
+	    key: 'render',
+	    value: function render() {
+	      // Render children after 
+	      var posterName = this.props.data.posterName;
+	      var content = this.props.data.content;
+	      var id = this.props.data.id;
+	      var timestamp = this.props.data.timestamp;
+	      var hablaAdminIcon = "";
+	
+	      if (this.props.data.privilege == "admin") {
+	        hablaAdminIcon = _react2.default.createElement('img', { src: chrome.extension.getURL("img/admin_icon.png"), className: 'hablaAdminIcon' });
+	      }
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'hablaReply' },
+	        _react2.default.createElement(
+	          'span',
+	          null,
+	          hablaAdminIcon,
+	          _react2.default.createElement(
+	            'h2',
+	            { className: 'hablaH2' },
+	            posterName
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          { className: 'hablaCommentText' },
+	          content
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'hablaReplyTimestamp' },
+	          _react2.default.createElement(
+	            'p',
+	            { className: 'hablaTimestamp' },
+	            timestamp
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Reply;
+	}(_react2.default.Component);
+	
+	exports.default = Reply;
 
 /***/ }
 /******/ ]);

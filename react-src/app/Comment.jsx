@@ -52,33 +52,33 @@ class Comment extends React.Component {
       replyElements.push(<Reply key={children[i].id} data={children[i]} />);
     }
 
-    let adminIcon = ""
+    let hablaAdminIcon = ""
     console.log(this.props.data.privilege)
     if (this.props.data.privilege == "admin") {
-      adminIcon = <img src={chrome.extension.getURL("img/admin_icon.png")} className="adminIcon" />
+      hablaAdminIcon = <img src={chrome.extension.getURL("img/admin_icon.png")} className="hablaAdminIcon" />
     }
     if (this.state.showReply == true) {
-      replyUsername = <p className="subduedUsername">{this.props.username}</p>
-      replyForm = <form className="replyCommentBox" id={this.props.replyBoxId} onSubmit={this.processReply}>
-          <textarea className="replyCommentTextarea" id={this.props.replyBoxId + "-textarea"} rows="4" cols="50" name="content" form={this.props.replyBoxId} placeholder="Type your comment here..."></textarea>
+      replyUsername = <p className="hablaSubduedUsername">{this.props.username}</p>
+      replyForm = <form className="hablaReplyCommentBox" id={this.props.replyBoxId} onSubmit={this.processReply}>
+          <textarea className="hablaReplyCommentTextArea" id={this.props.replyBoxId + "-textarea"} rows="4" cols="50" name="content" form={this.props.replyBoxId} placeholder="Type your comment here..."></textarea>
           <input type="hidden" name="username" value={this.props.username} />
           <input type="hidden" name="groupName" value={this.props.groupName} />
           <input type="hidden" name="parentId" value={this.props.id} />
-          <SubmitInput className="postButton" name="formSubmit" />
+          <SubmitInput className="hablaPostButton" name="formSubmit" />
         </form>;
     }
     return (
-    	<div className="comment">
+    	<div className="hablaComment">
         <span>
-          {adminIcon}
+          {hablaAdminIcon}
           <h2 className="hablaH2">{posterName}</h2>
         </span>
-        <p className="commentText">{content}</p>
-        <div className="replyTimestamp">
-          <button className="replyButton" onClick={this.displayReplyBox}>Reply</button>
-          <p className="timestamp">{timestamp}</p>
+        <p className="hablaCommentText">{content}</p>
+        <div className="hablaReplyTimestamp">
+          <button className="hablaReplyButton" onClick={this.displayReplyBox}>Reply</button>
+          <p className="hablaTimestamp">{timestamp}</p>
         </div>
-        <div className="replySection">
+        <div className="hablaReplySection">
           {replyElements}
           {replyUsername}
           {replyForm}

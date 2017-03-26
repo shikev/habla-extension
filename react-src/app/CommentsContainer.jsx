@@ -18,7 +18,7 @@ class Header extends React.Component {
   render() {
 
     return (
-    	<p className="commentsHeader">{this.props.groupName}</p>
+    	<p className="hablaCommentsHeader">{this.props.groupName}</p>
     );
   }
 }
@@ -131,7 +131,7 @@ class CommentSection extends React.Component {
       	<div>
       		{commentElements}
         </div>
-        <CommentBox id="top-level-comment-box" username={this.props.username} groupName={this.props.groupName} onSubmit={this.handleCommentSubmit} />
+        <CommentBox id="habla-top-level-comment-box" username={this.props.username} groupName={this.props.groupName} onSubmit={this.handleCommentSubmit} />
       </div>
     );
   }

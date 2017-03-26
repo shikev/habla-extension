@@ -6,6 +6,7 @@ import MasterContainer from './MasterContainer.jsx';
 window.hablaHasDisplayed = false;
 
 $(document).ready(function(){
+	console.log("hello")
 	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	  if (request.action == "toggleDisplay") {
 	  	if (window.hablaHasDisplayed) {

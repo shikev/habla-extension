@@ -15,13 +15,13 @@ class InitialLandingMenu extends React.Component {
 
   render() {
 
-  	let logoClasses = "logo";
-  	let landingButtonClasses = "landingButton";
+  	let hablaLogoClasses = "hablaLogo";
+  	let hablaLandingButtonClasses = "hablaLandingButton";
   	return (
 	  	<div>
-		  	<Logo className={logoClasses}/>
-				<Button className={landingButtonClasses} text="Join Group" onClick={this.props.onJoinSelect}/>
-				<Button className={landingButtonClasses} text="Create Group" onClick={this.props.onCreateSelect}/>
+		  	<Logo className={hablaLogoClasses}/>
+				<Button className={hablaLandingButtonClasses} text="Join Group" onClick={this.props.onJoinSelect}/>
+				<Button className={hablaLandingButtonClasses} text="Create Group" onClick={this.props.onCreateSelect}/>
 			</div>
 		);
   }
@@ -46,22 +46,22 @@ class LandingForm extends React.Component {
   }
 
   render() {
-    let logoClasses = "logo";
+    let hablaLogoClasses = "hablaLogo";
     let back = "<< Back"
     return (
     	<div>
-        <Logo className={logoClasses}/>
+        <Logo className={hablaLogoClasses}/>
     		<h1 className="hablaH1">{this.props.title}</h1>
         <form id={this.props.id} onSubmit={this.processSubmit}>
-          <label className="inputLabel">Group name:</label>
-          <TextInput className="inputBox" name="groupName" />
-          <label className="inputLabel">Group password:</label>
-          <PasswordInput className="inputBox" name="groupPassword" />
-          <label className="inputLabel">Your username:</label>
-          <TextInput className="inputBox" name="username" />
-          <SubmitInput className="generalButton" name="formSubmit" />
+          <label className="hablaInputLabel">Group name:</label>
+          <TextInput className="hablaInputBox" name="groupName" />
+          <label className="hablaInputLabel">Group password:</label>
+          <PasswordInput className="hablaInputBox" name="groupPassword" />
+          <label className="hablaInputLabel">Your username:</label>
+          <TextInput className="hablaInputBox" name="username" />
+          <SubmitInput className="hablaGeneralButton" name="formSubmit" />
         </form>
-    		<button className="backButton" onClick={this.props.onBack}>{back}</button>
+    		<button className="hablaBackButton" onClick={this.props.onBack}>{back}</button>
       </div>
     );
   }
@@ -145,8 +145,8 @@ class LandingContainer extends React.Component {
   }
 
   render() {
-  	let joinForm = this.state.active === "showJoinForm" ? <LandingForm id="join-group-form" title="Join Group" onBack={this.handleBackSelect} onSubmit={this.handleJoinFormSubmit} /> : "";
-  	let createForm = this.state.active === "showCreateForm" ? <LandingForm id="create-group-form" title="Create Group" onBack={this.handleBackSelect} onSubmit={this.handleCreateFormSubmit} /> : "";
+  	let joinForm = this.state.active === "showJoinForm" ? <LandingForm id="habla-join-group-form" title="Join Group" onBack={this.handleBackSelect} onSubmit={this.handleJoinFormSubmit} /> : "";
+  	let createForm = this.state.active === "showCreateForm" ? <LandingForm id="habla-create-group-form" title="Create Group" onBack={this.handleBackSelect} onSubmit={this.handleCreateFormSubmit} /> : "";
   	let initial = this.state.active === "showInitial" ? <InitialLandingMenu onCreateSelect={this.handleCreateSelect} onJoinSelect={this.handleJoinSelect}/> : "";
 
     return (

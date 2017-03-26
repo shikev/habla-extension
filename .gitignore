@@ -1,1 +1,3 @@
+.gitignore
 react-src/node_modules/
+js/

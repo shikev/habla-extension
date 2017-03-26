@@ -15,21 +15,21 @@ class Reply extends React.Component {
     let content = this.props.data.content;
     let id = this.props.data.id;
     let timestamp = this.props.data.timestamp;
-    let adminIcon = ""
+    let hablaAdminIcon = ""
 
     if (this.props.data.privilege == "admin") {
-      adminIcon = <img src={chrome.extension.getURL("img/admin_icon.png")} className="adminIcon" />
+      hablaAdminIcon = <img src={chrome.extension.getURL("img/admin_icon.png")} className="hablaAdminIcon" />
     }
 
     return (
-      <div className="reply">
+      <div className="hablaReply">
         <span>
-          {adminIcon}
+          {hablaAdminIcon}
           <h2 className="hablaH2">{posterName}</h2>
         </span>
-        <p className="commentText">{content}</p>
-        <div className="replyTimestamp">
-          <p className="timestamp">{timestamp}</p>
+        <p className="hablaCommentText">{content}</p>
+        <div className="hablaReplyTimestamp">
+          <p className="hablaTimestamp">{timestamp}</p>
         </div>
       </div>
     );

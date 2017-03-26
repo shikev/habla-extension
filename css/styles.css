@@ -1,54 +1,26 @@
 /*Comment box*/
-#comment-box-container {
-    width:100%;
-}
-#comment-box {
-    width: 100%;
-}
-#comment-box-submit-button {
-    display: inline-block;
-    width: 200px;
-    padding: 8px;
-    color: #000;
-    border: 1px solid #000;
-    text-align: center;
-    outline: none;
-    text-decoration: none;
-}
 
-#comment-box-submit-button:hover,
-#comment-box-submit-button:active {
-  background-color: #000;
-  color: #fff;
-}
-
-
-#comments-list {
-/* avoid an excessively wide status text */
-    word-wrap: break-word;
-}
-
-.replyCommentBox {
+.hablaReplyCommentBox {
     width: 240px;
 }
 
-#top-level-comment-box {
+#habla-top-level-comment-box {
     width: 270px;
 }
 
-#top-level-comment-box, .replyCommentBox {
+#habla-top-level-comment-box, .hablaReplyCommentBox {
     margin: 0px auto 0px auto;
 }
 
 
-#top-level-comment-box-textarea, .replyCommentTextarea {
+#habla-top-level-comment-box-textarea, .hablaReplyCommentTextArea {
     border-radius: 5px;
     border-color: var(--habla-color);
     display: block;
     width: inherit;
 }
 
-.postButton {
+.hablaPostButton {
     border: solid var(--habla-color);
     border-radius: 5px;
     background-color: var(--habla-color);
@@ -80,32 +52,32 @@
 }
 
 /*Habla logo on landing page*/
-.logo {
+.hablaLogo {
     display: block;
     margin: 20px auto;
     width: 290px;
 }
 
 /*Buttons on landing page*/
-.landingButton {
+.hablaLandingButton {
     font-size: 24px;
     padding: 15px 30px;
     width: 240px;
 }
 
 /*Back button*/
-.backButton {
+.hablaBackButton {
     font-size: 14px;
     margin: 10px 0px 10px 50px;
 }
 
-.replyButton {
+.hablaReplyButton {
     float: left;
     font-size: 12px;
     margin-right: 10px;
 }
 
-.backButton, .replyButton {
+.hablaBackButton, .hablaReplyButton {
     background: none;
     border: none;
     color: var(--habla-color);
@@ -114,19 +86,19 @@
     padding: 0px;
 }
 
-.backButton:hover, .replyButton:hover {
+.hablaBackButton:hover, .hablaReplyButton:hover {
     color: var(--secondary-color);
 }
 
 /*Other buttons*/
-.generalButton {
+.hablaGeneralButton {
     font-size: 20px;
     padding: 10px 30px;
     width: auto;
 }
 
 /*Button base*/
-.landingButton, .generalButton {
+.hablaLandingButton, .hablaGeneralButton {
     border-color: var(--habla-color);
     border-radius: 8px;
     border-style: solid;
@@ -139,13 +111,13 @@
     margin: 30px auto;
 }
 
-.landingButton:hover, .generalButton:hover {
+.hablaLandingButton:hover, .hablaGeneralButton:hover {
     background-color: var(--secondary-color);
     border-color: var(--secondary-color);
 }
 
 /*Input labels*/
-.inputLabel {
+.hablaInputLabel {
     color: var(--habla-color);
     display: block;
     font-family: Verdana;
@@ -156,7 +128,7 @@
 }
 
 /*Input boxes*/
-.inputBox {
+.hablaInputBox {
     border-color: var(--habla-color);
     border-style: solid;
     border-width: 1px;
@@ -169,20 +141,20 @@
     margin-bottom: 20px;
 }
 
-#join-group-form, #create-group-form {
+#habla-join-group-form, #habla-create-group-form {
     font-family: Verdana;
     margin: 20px auto;
     text-align: center;
     width: 200px;
 }
 
-.comment, .reply{
+.hablaComment, .hablaReply{
     display: block;
     height: auto;
     margin: 10px;
 }
 
-.commentText {
+.hablaCommentText {
     font-family: Verdana;
     font-size: 14px;
     height: auto;
@@ -207,12 +179,12 @@
     margin: 0 auto;
 }
 
-.replyTimestamp {
+.hablaReplyTimestamp {
     display: block;
     overflow: hidden;
 }
 
-.timestamp {
+.hablaTimestamp {
     color: gray;
     float: left;
     font-family: Verdana;
@@ -222,7 +194,7 @@
     padding: 0px;
 }
 
-.commentsHeader {
+.hablaCommentsHeader {
     background-color: var(--habla-color);
     color: white;
     font-family: verdana;
@@ -237,21 +209,21 @@
     width: 300px;
 }
 
-.replySection {
+.hablaReplySection {
     border-left: solid var(--habla-color);
     border-width: 0.5px;
     margin: 10px 10px 10px 15px;
     padding-left : 10px;
 }
 
-.subduedUsername {
+.hablaSubduedUsername {
     color: gray;
     font-family: Verdana;
     font-size: 16px;
     margin: 10px 0px 5px 0px;
 }
 
-.adminIcon {
+.hablaAdminIcon {
     float: left;
     height: 18px;
     margin-right: 5px;
