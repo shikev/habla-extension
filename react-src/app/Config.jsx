@@ -1,5 +1,5 @@
 var settings = {
-	baseUrl: "http://localhost:3000/"
+	baseUrl: "http://prod.ynjkmhrppm.us-east-1.elasticbeanstalk.com/"
 };
 
 
