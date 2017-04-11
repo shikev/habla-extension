@@ -1,7 +1,6 @@
 import $ from "jquery";
 import React from 'react';
 import {SubmitInput} from './Input.jsx';
-import {TextInput} from './Input.jsx';
 
 var helpers = require('./Helpers.jsx');
 
@@ -36,7 +35,10 @@ class CommentBox extends React.Component {
     return (
       <div>
         <form id={this.props.id} onSubmit={this.processSubmit}>
-          <TextInput className="hablaInputBox" name="link" />
+          <p className="hablaSubduedUsername">{this.props.username}</p>
+          <textarea id={this.props.id + "-textarea"} rows="4" cols="50" name="content" form={this.props.id} placeholder="Type your comment here..."></textarea>
+          <input type="hidden" name="username" value={this.props.username} />
+          <input type="hidden" name="groupName" value={this.props.groupName} />
           <SubmitInput className="hablaPostButton" name="formSubmit" />
         </form>
       </div>
