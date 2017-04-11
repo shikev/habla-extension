@@ -2,9 +2,10 @@ import $ from "jquery";
 import React from 'react';
 import CommentBox from './CommentBox.jsx';
 import Comment from './Comment.jsx';
+import Links from './Links.jsx'
 
 var helpers = require('./Helpers.jsx');
-var config = require('./Config.jsx')
+var config = require('./Config.jsx');
 
 
 // Contains name of group.
@@ -16,35 +17,10 @@ class Header extends React.Component {
     
   }
 
-  componentWillReceiveProps(nextProps) {
-  // You don't have to do this check first, but it can help prevent an unneeded render
-    if (nextProps.startTime !== this.state.startTime) {
-      this.setState({ startTime: nextProps.startTime });
-    }
-    let that = this;
-    $.ajax({
-      type: "GET",
-      url: config.settings.baseUrl + "api/v1/group/links?groupName=" + nextProps.groupName,
-      dataType: "json"
-    }).done(function(data) {
-      let links = data.links;
-      that.setState({
-        links: links
-      });
-
-    }).fail(function(data) {
-      // Display Error message on the UI side
-        console.log("Error: ", data);
-    });
-  }
+  
 
   render() {
-    let linksToRender = [];
-    if (this.state.links) {
-      for (let i = 0; i < this.state.links.length; i++) {
-       linksToRender.push(<a href={this.state.links[i]}>Link {i}</a>);
-      }
-    }
+    
     
     let groupNamesToRender = [];
     for (let i = 0; i < this.props.groupNames.length; i++) {
@@ -54,7 +30,8 @@ class Header extends React.Component {
     	<div id="header">
         <p className="hablaCommentsHeader">{this.props.groupName}</p>
         <button onClick={this.props.onBack}>Create/Join Group</button>
-        {linksToRender}
+        <Links id="links-form" groupName={this.props.groupName} />
+
         {groupNamesToRender}
       </div>
     );
@@ -69,9 +46,32 @@ class CommentSection extends React.Component {
     super(props);
     this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
     this.addComment = this.addComment.bind(this);
-    this.state = {comments: []}
+    this.state = {comments: []};
     // ajax request list of comments
-    
+    let that = this;
+    let hashedUrl = helpers.hashes.MD5(window.location.href);
+    console.log("Retrieving comments");
+    $.ajax({
+      type: "GET",
+      url: config.settings.baseUrl + "api/v1/comments?url=" + hashedUrl + "&groupName=" + this.props.groupName,
+      dataType: "json"
+    }).done(function(data) {
+
+      console.log("Comments retrieved: ", data);
+      let results = data.comments;
+      let password = data.password;
+      let comments = []
+      for(let i = 0; i < results.length; i++) {
+        comments.push(results[i]);
+      }
+      that.setState({
+        comments: comments,
+        password: password
+      })
+    }).fail(function(data) {
+      // Display Error message on the UI side
+        console.log("Error: ", data);
+    });
   }
 
   componentWillReceiveProps(nextProps) {
