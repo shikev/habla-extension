@@ -17,11 +17,16 @@ class InitialLandingMenu extends React.Component {
 
   	let hablaLogoClasses = "hablaLogo";
   	let hablaLandingButtonClasses = "hablaLandingButton";
+    let continueButton;
+    if (this.props.onContinue) {
+      continueButton = <Button text="Continue" onClick={this.props.onContinue}/>
+    }
   	return (
 	  	<div>
 		  	<Logo className={hablaLogoClasses}/>
 				<Button className={hablaLandingButtonClasses} text="Join Group" onClick={this.props.onJoinSelect}/>
 				<Button className={hablaLandingButtonClasses} text="Create Group" onClick={this.props.onCreateSelect}/>
+        {continueButton}
 			</div>
 		);
   }
@@ -94,25 +99,13 @@ class LandingContainer extends React.Component {
 			data: data,
 			dataType: "json"
 		}).done(function(d) {
-			// Set username and group in chrome.storage
-			chrome.runtime.sendMessage({action: "store", data: data}, function(response) {
-			  console.log(response);
-        if (response.message == "success") {
-          // Switch view to CommentsContainer
-          that.props.onRegister(data);
-        }
-        else {
-          alert("Error storing elements in storage, check your data/env", response);
-        }
-			});
-			
-			
+      that.props.onRegister(data);
 		}).fail(function(data) {
 				let errors = data["errors"];
 				// TODO: handle error
 				// (Pass errors to the child Landing Form)
 		    alert("Error Registering on server:", data);
-		});;
+		});
   }
 
   handleJoinFormSubmit(data) {
@@ -145,9 +138,10 @@ class LandingContainer extends React.Component {
   }
 
   render() {
+
   	let joinForm = this.state.active === "showJoinForm" ? <LandingForm id="habla-join-group-form" title="Join Group" onBack={this.handleBackSelect} onSubmit={this.handleJoinFormSubmit} /> : "";
   	let createForm = this.state.active === "showCreateForm" ? <LandingForm id="habla-create-group-form" title="Create Group" onBack={this.handleBackSelect} onSubmit={this.handleCreateFormSubmit} /> : "";
-  	let initial = this.state.active === "showInitial" ? <InitialLandingMenu onCreateSelect={this.handleCreateSelect} onJoinSelect={this.handleJoinSelect}/> : "";
+  	let initial = this.state.active === "showInitial" ? <InitialLandingMenu onContinue={this.props.onContinue} onCreateSelect={this.handleCreateSelect} onJoinSelect={this.handleJoinSelect}/> : "";
 
     return (
     	<div>

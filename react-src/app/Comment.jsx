@@ -53,7 +53,6 @@ class Comment extends React.Component {
     }
 
     let hablaAdminIcon = ""
-    console.log(this.props.data.privilege)
     if (this.props.data.privilege == "admin") {
       hablaAdminIcon = <img src={chrome.extension.getURL("img/admin_icon.png")} className="hablaAdminIcon" />
     }

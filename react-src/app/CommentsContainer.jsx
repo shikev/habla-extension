@@ -12,13 +12,51 @@ class Header extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {links: []};
+    
+  }
 
+  componentWillReceiveProps(nextProps) {
+  // You don't have to do this check first, but it can help prevent an unneeded render
+    if (nextProps.startTime !== this.state.startTime) {
+      this.setState({ startTime: nextProps.startTime });
+    }
+    let that = this;
+    $.ajax({
+      type: "GET",
+      url: config.settings.baseUrl + "api/v1/group/links?groupName=" + nextProps.groupName,
+      dataType: "json"
+    }).done(function(data) {
+      let links = data.links;
+      that.setState({
+        links: links
+      });
+
+    }).fail(function(data) {
+      // Display Error message on the UI side
+        console.log("Error: ", data);
+    });
   }
 
   render() {
-
+    let linksToRender = [];
+    if (this.state.links) {
+      for (let i = 0; i < this.state.links.length; i++) {
+       linksToRender.push(<a href={this.state.links[i]}>Link {i}</a>);
+      }
+    }
+    
+    let groupNamesToRender = [];
+    for (let i = 0; i < this.props.groupNames.length; i++) {
+      groupNamesToRender.push(<a onClick={this.props.onGroupSwitch.bind(this, this.props.groupNames[i])}>{this.props.groupNames[i]}</a>);
+    }
     return (
-    	<p className="hablaCommentsHeader">{this.props.groupName}</p>
+    	<div id="header">
+        <p className="hablaCommentsHeader">{this.props.groupName}</p>
+        <button onClick={this.props.onBack}>Create/Join Group</button>
+        {linksToRender}
+        {groupNamesToRender}
+      </div>
     );
   }
 }
@@ -33,51 +71,59 @@ class CommentSection extends React.Component {
     this.addComment = this.addComment.bind(this);
     this.state = {comments: []}
     // ajax request list of comments
-    let that = this;
-		let hashedUrl = helpers.hashes.MD5(window.location.href);
-    console.log("Retrieving comments");
-		$.ajax({
-			type: "GET",
-			url: config.settings.baseUrl + "api/v1/comments?url=" + hashedUrl + "&groupName=" + this.props.groupName,
-			dataType: "json"
-		}).done(function(data) {
-			// data = {
-			// 	comments: 
-			// 		{
-							// id1: {
-								//			children: [array of comments]
-								//      poster: username,
-								//			timestamp: time
-								// 			content: "content"
-							// },
-							// id2: {
-								//			children: [array of comments]
-								//      posterName: username,
-								//			timestamp: time
-								// 			content: "content"
-							// }
-
-			// 		}
-			// }
-			console.log("Comments retrieved: ", data);
-			let results = data.comments;
-			let comments = []
-	    for(let i = 0; i < results.length; i++) {
-	    	comments.push(results[i]);
-	    }
-	    that.setState({
-	    	comments: comments
-	    })
-
-		}).fail(function(data) {
-			// Display Error message on the UI side
-		    console.log("Error: ", data);
-		});
+    
   }
+
+  componentWillReceiveProps(nextProps) {
+  // You don't have to do this check first, but it can help prevent an unneeded render
+  if (nextProps.startTime !== this.state.startTime) {
+    this.setState({ startTime: nextProps.startTime });
+  }
+  let that = this;
+    let hashedUrl = helpers.hashes.MD5(window.location.href);
+    console.log("Retrieving comments");
+    $.ajax({
+      type: "GET",
+      url: config.settings.baseUrl + "api/v1/comments?url=" + hashedUrl + "&groupName=" + nextProps.groupName,
+      dataType: "json"
+    }).done(function(data) {
+      // data = {
+      //  comments: 
+      //    {
+              // id1: {
+                //      children: [array of comments]
+                //      poster: username,
+                //      timestamp: time
+                //      content: "content"
+              // },
+              // id2: {
+                //      children: [array of comments]
+                //      posterName: username,
+                //      timestamp: time
+                //      content: "content"
+              // }
+
+      //    }
+      // }
+      console.log("Comments retrieved: ", data);
+      let results = data.comments;
+      let password = data.password;
+      let comments = []
+      for(let i = 0; i < results.length; i++) {
+        comments.push(results[i]);
+      }
+      that.setState({
+        comments: comments,
+        password: password
+      })
+    }).fail(function(data) {
+      // Display Error message on the UI side
+        console.log("Error: ", data);
+    });
+}
 
   addComment(data) {
     let comment = data.comment;
-    console.log(comment);
     let parentId = comment.parentId;
     let comments = this.state.comments;
     // If top level comment
@@ -94,7 +140,7 @@ class CommentSection extends React.Component {
     }
     this.setState({
         comments: comments
-      })
+    })
   }
 
   handleCommentSubmit(data) {
@@ -125,7 +171,7 @@ class CommentSection extends React.Component {
     for (let i = 0; i < this.state.comments.length; i++) {
      commentElements.push(<Comment replyBoxId={"reply-box-" + this.state.comments[i].id} id={this.state.comments[i].id} key={this.state.comments[i].id} data={this.state.comments[i]} username={this.props.username} groupName={this.props.groupName} onReply={this.handleCommentSubmit}/>);
     }
-  	
+  	console.log(this.props.username, "Current Username");
     return (
       <div>
       	<div>
@@ -146,16 +192,32 @@ class CommentsContainer extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      groupName: this.props.groupNames[0],
+      username: this.props.usernames[0]
+    };
+    this.handleGroupSwitch = this.handleGroupSwitch.bind(this);
+    this.handleBack = this.handleBack.bind(this);
   }
 
-  
+  handleGroupSwitch(groupName) {
+    let indexOfUsername = this.props.groupNames.indexOf(groupName);
+    this.setState({
+      groupName: groupName,
+      username: this.props.usernames[indexOfUsername]
+    });
+  }
+
+  handleBack(event) {
+    this.props.onBack();
+  }
 
   render() {
 
     return (
     	<div>
-    		<Header groupName={this.props.groupName} />
-    		<CommentSection username={this.props.username} groupName={this.props.groupName} />
+    		<Header groupName={this.state.groupName} groupNames={this.props.groupNames} onGroupSwitch={this.handleGroupSwitch} onBack={this.handleBack}/>
+    		<CommentSection username={this.state.username} groupName={this.state.groupName} />
       </div>
     );
   }

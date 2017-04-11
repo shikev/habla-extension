@@ -32,7 +32,6 @@ class CommentBox extends React.Component {
 
   render() {
   	// TODO: MODULARIZE THE INPUTS HERE
-  	console.log(this.props);
     return (
       <div>
         <form id={this.props.id} onSubmit={this.processSubmit}>

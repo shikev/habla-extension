@@ -2,12 +2,12 @@ console.log("working");
 
 chrome.browserAction.onClicked.addListener(function(tab) {
 	console.log("browserAction click listener working");
-	// TODO Fix style using promises
-	chrome.storage.sync.get("username", function(data){
-		var username = data.username;
-		chrome.storage.sync.get("groupName", function(data){
-			var groupName = data.groupName;
-			chrome.tabs.sendMessage(tab.id, {action: "toggleDisplay", groupName: groupName, username: username});
+	// TODO Fix style using promises fuck that
+	chrome.storage.sync.get("usernames", function(data){
+		var usernames = data.usernames;
+		chrome.storage.sync.get("groupNames", function(data){
+			var groupNames = data.groupNames;
+			chrome.tabs.sendMessage(tab.id, {action: "toggleDisplay", groupNames: groupNames, usernames: usernames});
 		});
 	});
 });
