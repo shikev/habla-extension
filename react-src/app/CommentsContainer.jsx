@@ -14,10 +14,46 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {links: []};
-    
+    let that = this;
+    $.ajax({
+      type: "GET",
+      url: config.settings.baseUrl + "api/v1/group/password?groupName=" + this.props.groupName,
+      dataType: "json"
+    }).done(function(data) {
+      let password = data.password;
+
+      that.setState({
+        password: password
+      });
+
+    }).fail(function(data) {
+      // Display Error message on the UI side
+        console.log("Error: ", data);
+    });
   }
 
-  
+  componentWillReceiveProps(nextProps) {
+  // You don't have to do this check first, but it can help prevent an unneeded render
+    if (nextProps.startTime !== this.state.startTime) {
+      this.setState({ startTime: nextProps.startTime });
+    }
+    let that = this;
+    $.ajax({
+      type: "GET",
+      url: config.settings.baseUrl + "api/v1/group/password?groupName=" + nextProps.groupName,
+      dataType: "json"
+    }).done(function(data) {
+      let password = data.password;
+
+      that.setState({
+        password: password
+      });
+
+    }).fail(function(data) {
+      // Display Error message on the UI side
+        console.log("Error: ", data);
+    });
+  }
 
   render() {
     
@@ -33,13 +69,14 @@ class Header extends React.Component {
             <div className="hablaGroupName">{this.props.groupName}</div>
             <img className="hablaDropDownIcon" src={chrome.extension.getURL("img/drop_down.png")} />
           </button>
-          <p className="hablaGroupPassword">testing</p>
+          <p className="hablaGroupPassword">{this.state.password}</p>
         </div>
         <div className="hablaLinkHeader">
           <button className="hablaLinkButton">
             <img className="hablaLinkIcon" src={chrome.extension.getURL("img/link_icon.png")} />
           </button>
         </div>
+
       </div>
       // <button onClick={this.props.onBack}>Create/Join Group</button>
       // <Links id="links-form" groupName={this.props.groupName} />
