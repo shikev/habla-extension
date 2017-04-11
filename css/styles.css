@@ -70,6 +70,15 @@
     width: 240px;
 }
 
+.hablaBackButton, .hablaReplyButton, .hablaGroupButton {
+    background: none;
+    border: none;
+    color: var(--habla-color);
+    display: block;
+    font-family: Verdana;
+    padding: 0px;
+}
+
 /*Back button*/
 .hablaBackButton {
     font-size: 14px;
@@ -82,16 +91,15 @@
     margin-right: 10px;
 }
 
-.hablaBackButton, .hablaReplyButton {
-    background: none;
-    border: none;
-    color: var(--habla-color);
-    display: block;
-    font-family: Verdana;
-    padding: 0px;
+.hablaGroupButton {
+    border-top: solid var(--secondary-color);
+    font-size: 12px;
+    padding: 10px;
+    text-align: left;
+    width: inherit;
 }
 
-.hablaBackButton:hover, .hablaReplyButton:hover {
+.hablaBackButton:hover, .hablaReplyButton:hover, .hablaGroupButton:hover {
     color: var(--secondary-color);
 }
 
@@ -213,7 +221,7 @@
     width: 200px;
 }
 
-.hablaDropDownButton {
+#hablaDropDownButton {
     background: transparent;
     border-radius: 5px;
     border: solid transparent;
@@ -221,11 +229,15 @@
     height: auto;
     padding: 5px;
     text-align: left;
-    width: 200px;
+    max-width: 200px;
 }
 
-.hablaDropDownButton:hover {
+#hablaDropDownButton:hover {
     border-color: var(--secondary-color);
+}
+
+#hablaDropDownButton:hover + #GroupsDropDownMenu, #GroupsDropDownMenu:hover{
+    display: block;
 }
 
 .hablaGroupName {
@@ -259,19 +271,64 @@
     margin-bottom: auto;
 }
 
-.hablaLinkButton {
+#hablaLinkButton {
     background: transparent;
     border: solid transparent;
     border-radius: 5px;
 }
 
-.hablaLinkButton:hover {
+#hablaLinkButton:hover {
     border-color: var(--secondary-color);
+}
+
+#hablaLinkButton:hover + #LinksDropDownMenu, #LinksDropDownMenu:hover {
+    display: block;
 }
 
 .hablaLinkIcon {
     height: 30px;
     width: 30px;
+}
+
+#GroupsDropDownMenu, #LinksDropDownMenu {
+    background-color: white;
+    border: solid var(--habla-color);
+    display: none;
+    position: absolute;
+}
+
+#GroupsDropDownMenu {
+    padding-left: 0px;
+    width: 270px;
+}
+
+#LinksDropDownMenu {
+    right: 0px;
+    margin-right: 15px;
+    width: 270px;
+}
+
+.hablaLink {
+    color: var(--habla-color);
+    padding: 5px;
+    margin: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.hablaLink:hover {
+    background-color: var(--secondary-color);
+    color: white;
+    opacity: .4;
+}
+
+.hablaLink:active {
+    background-color: var(--habla-color);
+    opacity: .8;
+}
+
+.hablaOverFlowLink {
 }
 
 .hablaReplySection {
