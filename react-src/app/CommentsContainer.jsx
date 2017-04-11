@@ -193,8 +193,8 @@ class CommentsContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      groupName: this.props.groupNames[0],
-      username: this.props.usernames[0]
+      groupName: this.props.groupNames[this.props.groupNames.length - 1],
+      username: this.props.usernames[this.props.usernames - 1]
     };
     this.handleGroupSwitch = this.handleGroupSwitch.bind(this);
     this.handleBack = this.handleBack.bind(this);
