@@ -27,13 +27,24 @@ class Header extends React.Component {
       groupNamesToRender.push(<a onClick={this.props.onGroupSwitch.bind(this, this.props.groupNames[i])}>{this.props.groupNames[i]}</a>);
     }
     return (
-    	<div id="header">
-        <p className="hablaCommentsHeader">{this.props.groupName}</p>
-        <button onClick={this.props.onBack}>Create/Join Group</button>
-        <Links id="links-form" groupName={this.props.groupName} />
-
-        {groupNamesToRender}
+    	<div id="header" className="hablaHeader">
+        <div class="hablaGroupHeader">
+          <button className="hablaDropDownButton">
+            <div className="hablaGroupName">{this.props.groupName}</div>
+            <img className="hablaDropDownIcon" src={chrome.extension.getURL("img/drop_down.png")} />
+          </button>
+          <p className="hablaGroupPassword">testing</p>
+        </div>
+        <div className="hablaLinkHeader">
+          <button className="hablaLinkButton">
+            <img className="hablaLinkIcon" src={chrome.extension.getURL("img/link_icon.png")} />
+          </button>
+        </div>
       </div>
+      // <button onClick={this.props.onBack}>Create/Join Group</button>
+      // <Links id="links-form" groupName={this.props.groupName} />
+
+      // {groupNamesToRender}
     );
   }
 }
