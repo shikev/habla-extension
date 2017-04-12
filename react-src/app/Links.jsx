@@ -82,6 +82,7 @@ class Links extends React.Component {
       that.setState({
         links: links
       })
+      $(".hablaAddLinkInputBox").val('');
 
     }).fail(function(data) {
       // Display Error message on the UI side
