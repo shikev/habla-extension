@@ -76,7 +76,7 @@ class Header extends React.Component {
             {groupNamesToRender}
             <button className="hablaGroupButton" onClick={this.props.onBack}>{addGroup}</button>
           </div>
-          <p className="hablaGroupPassword">{this.props.password}</p>
+          <p className="hablaGroupPassword">{this.state.password}</p>
         </div>
         <div className="hablaLinkHeader">
           <button id="hablaLinkButton">
