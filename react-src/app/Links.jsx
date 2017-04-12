@@ -49,6 +49,7 @@ class Links extends React.Component {
       if (!links) {
         links = [];
       }
+      console.log(links, "links retrieved");
       that.setState({
         links: links
       });
@@ -63,22 +64,21 @@ class Links extends React.Component {
   	event.preventDefault();
 
   	let dataArray = $("#" + this.props.id).serializeArray();
-  	let data = {}
+  	let postData = {}
   	for (let i = 0; i < dataArray.length; i++) {
   		let name = dataArray[i]["name"];
   		let value = dataArray[i]["value"];
-  		data[name] = value;
+  		postData[name] = value;
   	}
-    console.log(data, "linkedata");
     let that = this;
   	$.ajax({
       type: "POST",
-      data: data,
+      data: postData,
       url: config.settings.baseUrl + "api/v1/group/links",
       dataType: "json"
-    }).done(function(data) {
+    }).done(function(data) { 
       let links = that.state.links;
-      links.unshift(data.link);
+      links.unshift(postData.link);
       that.setState({
         links: links
       })
@@ -103,7 +103,7 @@ class Links extends React.Component {
         {linksToRender}
         <form className="hablaAddLinkForm" id={this.props.id} onSubmit={this.processSubmit}>
           <label className="hablaAddLinkLabel">Add Link:</label>
-          <input type="hidden" id="groupName" value={this.props.groupName} />
+          <input type="hidden" id="groupName" name="groupName" value={this.props.groupName} />
           <TextInput className="hablaAddLinkInputBox" name="link" />
           <SubmitInput text="+" className="hablaAddLinkPostButton" name="formSubmit" />
         </form>
