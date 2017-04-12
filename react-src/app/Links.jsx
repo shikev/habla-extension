@@ -95,18 +95,18 @@ class Links extends React.Component {
 
     if (this.state.links) {
       for (let i = 0; i < this.state.links.length; i++) {
-       linksToRender.push(<a href={this.state.links[i]}>Link {i}</a>);
+       linksToRender.push(<a className="hablaLink" href={this.state.links[i]}>{this.state.links[i]}</a>);
       }
     }
     return (
-      <div>
-        <form id={this.props.id} onSubmit={this.processSubmit}>
-          <label className="hablaInputLabel">Add Link:</label>
-          <input type="hidden" name="groupName" value={this.props.groupName} />
-          <TextInput className="hablaInputBox" name="link" />
-          <SubmitInput className="hablaPostButton" name="formSubmit" />
-        </form>
+      <div id="LinksDropDownMenu">
         {linksToRender}
+        <form className="hablaAddLinkForm" id={this.props.id} onSubmit={this.processSubmit}>
+          <label className="hablaAddLinkLabel">Add Link:</label>
+          <input type="hidden" id="groupName" value={this.props.groupName} />
+          <TextInput className="hablaAddLinkInputBox" name="link" />
+          <SubmitInput text="+" className="hablaAddLinkPostButton" name="formSubmit" />
+        </form>
     
       </div>
     );

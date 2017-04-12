@@ -18,8 +18,9 @@ class InitialLandingMenu extends React.Component {
   	let hablaLogoClasses = "hablaLogo";
   	let hablaLandingButtonClasses = "hablaLandingButton";
     let continueButton;
+    let continueButtonText = "Continue >>"
     if (this.props.onContinue) {
-      continueButton = <Button text="Continue" onClick={this.props.onContinue}/>
+      continueButton = <Button className="hablaContinueButton" text={continueButtonText} onClick={this.props.onContinue}/>
     }
   	return (
 	  	<div>

@@ -70,7 +70,7 @@
     width: 240px;
 }
 
-.hablaBackButton, .hablaReplyButton, .hablaGroupButton {
+.hablaBackButton, .hablaReplyButton, .hablaGroupButton, .hablaContinueButton {
     background: none;
     border: none;
     color: var(--habla-color);
@@ -97,6 +97,12 @@
     padding: 10px;
     text-align: left;
     width: inherit;
+}
+
+.hablaContinueButton {
+    font-size: 14px;
+    float: right;
+    margin: 10px 50px 10px 0px;
 }
 
 .hablaBackButton:hover, .hablaReplyButton:hover, .hablaGroupButton:hover {
@@ -310,8 +316,8 @@
 
 .hablaLink {
     color: var(--habla-color);
+    display: block;
     padding: 5px;
-    margin: 0px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -328,7 +334,37 @@
     opacity: .8;
 }
 
-.hablaOverFlowLink {
+.hablaAddLinkForm {
+    border-top: solid var(--secondary-color);
+    padding: 5px;
+    margin: 0px;
+}
+
+.hablaAddLinkLabel {
+    color: var(--habla-color);
+    font-size: 12px;
+    font-style: bold;
+}
+
+.hablaAddLinkInputBox {
+    border: solid var(--habla-color);
+    border-radius: 5px;
+    margin: 0px 5px;
+    width: 165px;
+}
+
+.hablaAddLinkPostButton {
+    border: none;
+    border-radius: 5px;
+    background-color: var(--habla-color);
+    color: white;
+    display: inline-block;
+    font-size: 14px;
+    margin: 0px;
+}
+
+.hablaAddLinkPostButton:hover {
+    background-color: var(--secondary-color);
 }
 
 .hablaReplySection {

@@ -45,7 +45,7 @@ class SubmitInput extends React.Component {
 
   render() {
     return (
-      <input type="submit" className={this.props.className} name={this.props.name} text={this.props.text} />
+      <input type="submit" className={this.props.className} name={this.props.name} value={this.props.text}/>
     );
   }
 }

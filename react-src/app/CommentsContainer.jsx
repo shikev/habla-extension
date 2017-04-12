@@ -59,29 +59,33 @@ class Header extends React.Component {
     
     
     let groupNamesToRender = [];
+    let addGroup = "<< Add group"
     for (let i = 0; i < this.props.groupNames.length; i++) {
-      groupNamesToRender.push(<a onClick={this.props.onGroupSwitch.bind(this, this.props.groupNames[i])}>{this.props.groupNames[i]}</a>);
+      if (this.props.groupName === this.props.groupName[i]) {
+        continue;
+      }
+      groupNamesToRender.push(<a className="hablaLink" onClick={this.props.onGroupSwitch.bind(this, this.props.groupNames[i])}>{this.props.groupNames[i]}</a>);
     }
     return (
     	<div id="header" className="hablaHeader">
-        <div class="hablaGroupHeader">
-          <button className="hablaDropDownButton">
+        <div className="hablaGroupHeader">
+          <button id="hablaDropDownButton">
             <div className="hablaGroupName">{this.props.groupName}</div>
             <img className="hablaDropDownIcon" src={chrome.extension.getURL("img/drop_down.png")} />
           </button>
-          <p className="hablaGroupPassword">{this.state.password}</p>
+          <div id="GroupsDropDownMenu">
+            {groupNamesToRender}
+            <button className="hablaGroupButton" onClick={this.props.onBack}>{addGroup}</button>
+          </div>
+          <p className="hablaGroupPassword">{this.props.password}</p>
         </div>
         <div className="hablaLinkHeader">
-          <button className="hablaLinkButton">
+          <button id="hablaLinkButton">
             <img className="hablaLinkIcon" src={chrome.extension.getURL("img/link_icon.png")} />
           </button>
+          <Links id="links-form" groupName={this.props.groupName} />
         </div>
-
       </div>
-      // <button onClick={this.props.onBack}>Create/Join Group</button>
-      // <Links id="links-form" groupName={this.props.groupName} />
-
-      // {groupNamesToRender}
     );
   }
 }
