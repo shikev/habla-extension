@@ -219,6 +219,7 @@ class CommentSection extends React.Component {
 
 
   render() {
+
   	let commentElements = [];
     for (let i = 0; i < this.state.comments.length; i++) {
      commentElements.push(<Comment replyBoxId={"reply-box-" + this.state.comments[i].id} id={this.state.comments[i].id} key={this.state.comments[i].id} data={this.state.comments[i]} username={this.props.username} groupName={this.props.groupName} onReply={this.handleCommentSubmit}/>);
@@ -243,10 +244,11 @@ class CommentSection extends React.Component {
 class CommentsContainer extends React.Component {
 
   constructor(props) {
+
     super(props);
     this.state = {
       groupName: this.props.groupNames[this.props.groupNames.length - 1],
-      username: this.props.usernames[this.props.usernames - 1]
+      username: this.props.usernames[this.props.usernames.length - 1]
     };
     this.handleGroupSwitch = this.handleGroupSwitch.bind(this);
     this.handleBack = this.handleBack.bind(this);
@@ -265,7 +267,7 @@ class CommentsContainer extends React.Component {
   }
 
   render() {
-
+    console.log(this.state, "state in commentscontainer");
     return (
     	<div>
     		<Header groupName={this.state.groupName} groupNames={this.props.groupNames} onGroupSwitch={this.handleGroupSwitch} onBack={this.handleBack}/>
