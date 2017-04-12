@@ -21,7 +21,6 @@ class Header extends React.Component {
       dataType: "json"
     }).done(function(data) {
       let password = data.password;
-
       that.setState({
         password: password
       });
@@ -61,7 +60,7 @@ class Header extends React.Component {
     let groupNamesToRender = [];
     let addGroup = "<< Add group"
     for (let i = 0; i < this.props.groupNames.length; i++) {
-      if (this.props.groupName === this.props.groupName[i]) {
+      if (this.props.groupName === this.props.groupNames[i]) {
         continue;
       }
       groupNamesToRender.push(<a className="hablaLink" onClick={this.props.onGroupSwitch.bind(this, this.props.groupNames[i])}>{this.props.groupNames[i]}</a>);
