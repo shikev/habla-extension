@@ -1,3 +1,22 @@
+:root {
+    --habla-color: rgb(112, 48, 160);
+    --secondary-color: rgb(170, 114, 212);
+}
+
+/*Master Container*/
+#habla {
+    background-color: rgb(256,256,256); /* Fallback color */
+    border-left: solid var(--habla-color);
+    display: block; /* Hidden by default */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    position: fixed; /* Stay in place */
+    right: 0;
+    top: 0;
+    width: 300px; /* Full width */
+    z-index: 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999; /* Sit on top */
+}
+
 /*Comment box*/
 .hablaReplyCommentBox {
     width: 240px;
@@ -34,25 +53,6 @@
 .hablaPostButton:hover {
     background-color: var(--secondary-color);
     border-color: var(--secondary-color)
-}
-
-:root {
-    --habla-color: rgb(112, 48, 160);
-    --secondary-color: rgb(170, 114, 212);
-}
-
-/*Master Container*/
-#habla {
-    background-color: rgb(256,256,256); /* Fallback color */
-    border-left: solid var(--habla-color);
-    display: block; /* Hidden by default */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    position: fixed; /* Stay in place */
-    right: 0;
-    top: 0;
-    width: 300px; /* Full width */
-    z-index: 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999; /* Sit on top */
 }
 
 /*Habla logo on landing page*/
