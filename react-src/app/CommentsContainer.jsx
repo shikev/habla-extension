@@ -66,7 +66,7 @@ class Header extends React.Component {
       groupNamesToRender.push(<a className="hablaLink" onClick={this.props.onGroupSwitch.bind(this, this.props.groupNames[i])}>{this.props.groupNames[i]}</a>);
     }
     return (
-    	<div id="header" className="hablaHeader">
+    	<div className="hablaHeader">
         <div className="hablaGroupHeader">
           <button id="hablaDropDownButton">
             <div className="hablaGroupName">{this.props.groupName}</div>
